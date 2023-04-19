@@ -21,10 +21,7 @@ import com.mygdx.drop.entities.RaindropPool;
 import java.util.Iterator;
 
 public class GameScreen implements Screen {
-	private static final int SCORE_INCREMENT_THRESHOLD = 999;
-	private static final Object SPEED_INCREMENT = 1;
 	final DropGame game;
-	private float lastDropTime;
 	private Sound dropSound;
 	private Sound rainMusic;
 
