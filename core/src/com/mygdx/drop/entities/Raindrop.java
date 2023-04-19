@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
-import static com.mygdx.drop.Constants.HEIGHT;
-import static com.mygdx.drop.Constants.WIDTH;
+import static com.mygdx.drop.entities.Constants.VIEWPORT_HEIGHT;
+import static com.mygdx.drop.entities.Constants.VIEWPORT_WIDTH;
 
 public class Raindrop {
     private static final float SPEED = 200;
@@ -23,8 +23,8 @@ public class Raindrop {
     }
 
     public void reset() {
-        this.x = MathUtils.random(WIDTH - texture.getWidth());
-        this.y = HEIGHT;
+        this.x = MathUtils.random(VIEWPORT_WIDTH - texture.getWidth());
+        this.y = VIEWPORT_HEIGHT;
     }
 
     public float getX() {

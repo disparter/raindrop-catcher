@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.drop.entities.Bucket;
+import com.mygdx.drop.entities.Constants;
 import com.mygdx.drop.entities.Raindrop;
 import com.mygdx.drop.entities.RaindropPool;
 
@@ -23,20 +24,17 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void show() {
-		dropImage = new Texture(Gdx.files.internal("drop.png"));
-		bucketImage = new Texture(Gdx.files.internal("bucket.png"));
+		bucket = new Bucket();
+		bucket.setPosition(Constants.VIEWPORT_WIDTH / 2 - Constants.BUCKET_WIDTH / 2, Constants.BUCKET_HEIGHT);
 
-		bucket = new Bucket(bucketImage);
-		bucket.setPosition(Constants.WIDTH / 2 - Constants.BUCKET_WIDTH / 2, Constants.BUCKET_Y);
-
-		raindrops = new Array<Raindrop>();
-		raindropPool = new RaindropPool(dropImage);
+		raindrops = new Array<>();
+		raindropPool = new RaindropPool();
 	}
 
 	@Override
 	public void render(float delta) {
 		// spawn new raindrops
-		if (TimeUtils.nanoTime() - lastDropTime > Constants.SPAWN_TIME) {
+		if (TimeUtils.nanoTime() - lastDropTime > Constants.RAINDROPS_SPAWN_DELAY) {
 			spawnRaindrop();
 		}
 
