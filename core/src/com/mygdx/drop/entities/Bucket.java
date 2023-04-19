@@ -2,21 +2,22 @@ package com.mygdx.drop.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.mygdx.drop.entities.Constants.BUCKET_HEIGHT;
+import static com.mygdx.drop.entities.Constants.BUCKET_WIDTH;
+
 public class Bucket {
-
-    private static final int WIDTH = 64;
-    private static final int HEIGHT = 64;
-
     private final Vector2 position = new Vector2();
     private final Sprite sprite;
 
     public Bucket() {
         Texture texture = new Texture(Gdx.files.internal("bucket.png"));
         sprite = new Sprite(texture);
-        sprite.setSize(WIDTH, HEIGHT);
+        sprite.setSize(BUCKET_WIDTH, BUCKET_HEIGHT);
     }
 
     public void setPosition(float x, float y) {
@@ -35,4 +36,13 @@ public class Bucket {
     public void dispose() {
         sprite.getTexture().dispose();
     }
+
+    public void draw(Batch batch) {
+        batch.draw(sprite, position.x, position.y);
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(position.x, position.y, sprite.getTexture().getWidth(), sprite.getTexture().getHeight());
+    }
+
 }

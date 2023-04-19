@@ -1,76 +1,131 @@
 package com.mygdx.drop.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.drop.DropGame;
 import com.mygdx.drop.entities.Bucket;
+import com.mygdx.drop.entities.Constants;
 import com.mygdx.drop.entities.Raindrop;
 import com.mygdx.drop.entities.RaindropPool;
 
-public class GameScreen extends ScreenAdapter {
+import java.util.Iterator;
 
-	private final DropGame game;
-	private final BitmapFont font;
-	private final SpriteBatch batch;
-	private final Array<Raindrop> raindrops;
-	private final Bucket bucket;
-	private final RaindropPool raindropPool;
+public class GameScreen implements Screen {
+	private static final int SCORE_INCREMENT_THRESHOLD = 999;
+	private static final Object SPEED_INCREMENT = 1;
+	final DropGame game;
 	private long lastDropTime;
 
-	public GameScreen(DropGame game) {
+	OrthographicCamera camera;
+	SpriteBatch batch;
+
+	// entities
+	Bucket bucket;
+	RaindropPool raindropPool;
+	Array<Raindrop> raindrops;
+
+	// game state
+	int score;
+	String scoreString;
+	GlyphLayout scoreLayout;
+
+	public GameScreen(final DropGame game) {
 		this.game = game;
-		font = new BitmapFont();
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+
 		batch = new SpriteBatch();
-		raindrops = new Array<>();
+
 		bucket = new Bucket();
+		bucket.setPosition(Constants.VIEWPORT_HEIGHT / 2f - Constants.BUCKET_WIDTH / 2f, Constants.BUCKET_HEIGHT);
+
 		raindropPool = new RaindropPool();
-		lastDropTime = TimeUtils.nanoTime();
+		raindrops = new Array<Raindrop>();
+
+		score = 0;
+		scoreString = "Score: 0";
+		scoreLayout = new GlyphLayout();
+	}
+
+	@Override
+	public void show() {
+
 	}
 
 	@Override
 	public void render(float delta) {
-		// clear the screen with a dark blue color
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		// tell the bucket to update its position
-		bucket.setPosition(Gdx.input.getAccelerometerX());
+		camera.update();
 
-		// check if we need to create a new raindrop
-		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
-			spawnRaindrop();
+		batch.setProjectionMatrix(camera.combined);
+
+		batch.begin();
+		bucket.draw(batch);
+		for (Raindrop raindrop : raindrops) {
+			raindrop.draw(batch);
+		}
+		batch.end();
+
+		if (Gdx.input.isTouched()) {
+			Vector3 touchPos = new Vector3();
+			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(touchPos);
+			bucket.setPosition(touchPos.x - Constants.BUCKET_WIDTH / 2f, Constants.BUCKET_HEIGHT);
 		}
 
-		// move the raindrops, remove any that are beneath the bottom edge of
-		// the screen or that hit the bucket. In the later case we increase the
-		// score variable and add a sound effect.
-		for (int i = 0; i < raindrops.size; i++) {
-			Raindrop raindrop = raindrops.get(i);
+		if (MathUtils.random() < delta * Constants.RAINDROP_SPAWN_FREQUENCY) {
+			Raindrop raindrop = raindropPool.obtain();
+			raindrop.setPosition(MathUtils.random(0, Constants.VIEWPORT_WIDTH - Constants.RAINDROP_WIDTH), Constants.VIEWPORT_HEIGHT);
+			raindrops.add(raindrop);
+		}
+
+		Iterator<Raindrop> iter = raindrops.iterator();
+		while (iter.hasNext()) {
+			Raindrop raindrop = iter.next();
 			raindrop.update(delta);
-			if (raindrop.getPosition().y + raindrop.getHeight() < 0) {
-				raindrops.removeIndex(i);
-				raindropPool.free(raindrop);
-			} else if (raindrop.getBounds().overlaps(bucket.getBounds())) {
+			if (raindrop.getBounds().overlaps(bucket.getBounds())) {
 				game.playDropSound();
-				raindrops.removeIndex(i);
+				iter.remove();
+				score++;
+				scoreString = "Score: " + score;
+				scoreLayout.setText(game.getFont(), scoreString);
+			}
+			if (raindrop.getPosition().y + raindrop.getHeight() < 0) {
+				iter.remove();
 				raindropPool.free(raindrop);
 			}
 		}
+	}
 
-		// draw the bucket and all drops
-		batch.begin();
-		bucket.draw(batch);
-		for (Drop raindrop : raindrops) {
-			raindrop.draw(batch);
-		}
-		font.draw(batch, "Drops Collected: " + game.getScore(), 0, Gdx.graphics.getHeight());
-		batch.end();
+	@Override
+	public void resize(int width, int height) {
+
+	}
+
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
+
+	}
+
+	@Override
+	public void hide() {
+
 	}
 
 	private void spawnRaindrop() {
@@ -80,10 +135,14 @@ public class GameScreen extends ScreenAdapter {
 		lastDropTime = TimeUtils.nanoTime();
 	}
 
+	private void incrementScore() {
+		score++;
+	}
+
+
 	@Override
 	public void dispose() {
 		batch.dispose();
-		font.dispose();
 		raindropPool.clear();
 	}
 }

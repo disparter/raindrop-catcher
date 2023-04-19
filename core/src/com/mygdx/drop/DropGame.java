@@ -1,28 +1,41 @@
 package com.mygdx.drop;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.drop.screens.GameScreen;
 
-public class DropGame extends ApplicationAdapter {
+public class DropGame extends Game {
     private GameScreen gameScreen;
+
+    private Sound dropSound;
+    private Sound rainMusic;
+    private BitmapFont font;
 
     @Override
     public void create () {
         gameScreen = new GameScreen(this);
+        setScreen(gameScreen);
+        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        rainMusic = Gdx.audio.newSound(Gdx.files.internal("rain.mp3"));
+        font = new BitmapFont();
     }
 
-    @Override
-    public void render () {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        gameScreen.render(Gdx.graphics.getDeltaTime());
+    public void render() {
+        super.render();
     }
 
-    @Override
-    public void dispose () {
+    public void dispose() {
         gameScreen.dispose();
     }
+
+    public void playDropSound() {
+        dropSound.play();
+    }
+
+    public BitmapFont getFont() {
+        return font;
+    }
+
 }
