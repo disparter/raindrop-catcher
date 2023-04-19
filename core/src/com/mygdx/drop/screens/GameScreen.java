@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
 	private static final int SCORE_INCREMENT_THRESHOLD = 999;
 	private static final Object SPEED_INCREMENT = 1;
 	final DropGame game;
-	private long lastDropTime;
+	private float lastDropTime;
 
 	OrthographicCamera camera;
 	SpriteBatch batch;
@@ -97,9 +97,7 @@ public class GameScreen implements Screen {
 			if (raindrop.getBounds().overlaps(bucket.getBounds())) {
 				game.playDropSound();
 				iter.remove();
-				score++;
-				scoreString = "Score: " + score;
-				scoreLayout.setText(game.getFont(), scoreString);
+				incrementScore();
 			}
 			if (raindrop.getPosition().y + raindrop.getHeight() < 0) {
 				iter.remove();
@@ -137,6 +135,8 @@ public class GameScreen implements Screen {
 
 	private void incrementScore() {
 		score++;
+		scoreString = "Score: " + score;
+		scoreLayout.setText(game.getFont(), scoreString);
 	}
 
 
