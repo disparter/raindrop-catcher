@@ -3,7 +3,6 @@ package com.mygdx.drop.entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 
 import static com.mygdx.drop.Constants.HEIGHT;
 import static com.mygdx.drop.Constants.WIDTH;
@@ -14,12 +13,6 @@ public class Raindrop {
     private float x;
     private float y;
     private Texture texture;
-
-    public Raindrop(Texture texture, RaindropPool raindropPool) {
-        super(texture);
-        this.raindropPool = raindropPool;
-        velocity = new Vector2(0, -200);
-    }
 
     public void update(float deltaTime) {
         this.y -= SPEED * deltaTime;
