@@ -47,12 +47,7 @@ public class MainMenuScreen implements Screen {
 	}
 
 	private Skin setupSkin() {
-		Skin skin = new Skin();
-		Label.LabelStyle labelStyle = new Label.LabelStyle();
-		labelStyle.font = font;
-		labelStyle.fontColor = Color.WHITE;
-		skin.add("default", labelStyle);
-		return skin;
+		return new Skin(Gdx.files.internal("uiskin.json"));
 	}
 
 	@Override
@@ -60,9 +55,12 @@ public class MainMenuScreen implements Screen {
 		// set the input processor
 		Gdx.input.setInputProcessor(stage);
 
+		Skin exitButtonSkin = setupSkin();
+		Skin startButtonSkin = setupSkin();
+
 		// create the buttons
-		TextButton exitButton = new TextButton("EXIT", skin);
-		TextButton startButton = new TextButton("START", skin);
+		TextButton exitButton = new TextButton("EXIT", exitButtonSkin);
+		TextButton startButton = new TextButton("START", startButtonSkin);
 
 		// set the position and size of the buttons
 		exitButton.setPosition(Gdx.graphics.getWidth() / 2 - exitButton.getWidth() / 2, Gdx.graphics.getHeight() / 2 - exitButton.getHeight() / 2 - 50);
