@@ -3,7 +3,8 @@ package com.mygdx.drop.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,13 +23,12 @@ import com.mygdx.drop.entities.RaindropPool;
 
 import java.util.Iterator;
 
-import static com.mygdx.drop.entities.Constants.BUCKET_MOVEMENT;
-
-public class GameScreen extends ScreenAdapter {
+public class GameScreen implements Screen, InputProcessor {
 	final DropGame game;
 	private Sound dropSound;
 	private Sound rainMusic;
-
+	private boolean movingLeft;
+	private boolean movingRight;
 	OrthographicCamera camera;
 	SpriteBatch batch;
 
@@ -69,27 +69,12 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(new InputAdapter() {
-			@Override
-			public boolean keyDown(int keycode) {
-				if (keycode == Input.Keys.LEFT) {
-					bucket.setPosition(bucket.getPosition().x - BUCKET_MOVEMENT * Gdx.graphics.getDeltaTime(), bucket.getPosition().y);
-				}
-				if (keycode == Input.Keys.RIGHT) {
-					bucket.setPosition(bucket.getPosition().x + BUCKET_MOVEMENT * Gdx.graphics.getDeltaTime(), bucket.getPosition().y);
-				}
-				return true;
-			}
-
-			@Override
-			public boolean keyUp(int keycode) {
-				return true;
-			}
-		});
 	}
 
 	@Override
 	public void render(float delta) {
+		handleInput();
+
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -172,5 +157,64 @@ public class GameScreen extends ScreenAdapter {
 
 	public Batch getBatch(){
 		return this.batch;
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
+			movingLeft = true;
+		} else if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
+			movingRight = true;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
+			movingLeft = false;
+		} else if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
+			movingRight = false;
+		}
+		return true;
+	}
+
+	private void handleInput() {
+		if (movingLeft) {
+			bucket.moveLeft();
+		}
+		if (movingRight) {
+			bucket.moveRight();
+		}
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(float amountX, float amountY) {
+		return false;
 	}
 }

@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import static com.mygdx.drop.entities.Constants.BUCKET_HEIGHT;
+import static com.mygdx.drop.entities.Constants.BUCKET_MOVEMENT;
 import static com.mygdx.drop.entities.Constants.BUCKET_WIDTH;
+import static com.mygdx.drop.entities.Constants.VIEWPORT_WIDTH;
 
 public class Bucket {
     private final Vector2 position = new Vector2();
@@ -45,4 +47,15 @@ public class Bucket {
         return new Rectangle(position.x, position.y, sprite.getTexture().getWidth(), sprite.getTexture().getHeight());
     }
 
+    public void moveRight() {
+        if (position.x < VIEWPORT_WIDTH - sprite.getWidth()) {
+            position.x += BUCKET_MOVEMENT;
+        }
+    }
+
+    public void moveLeft() {
+        if (position.x > 0) {
+            position.x -= BUCKET_MOVEMENT;
+        }
+    }
 }
