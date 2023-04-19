@@ -82,8 +82,7 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		handleInput(); // A
-
+		handleInput();
 		bucket.update();
 		spawnRaindrop();
 
@@ -125,31 +124,16 @@ public class GameScreen implements Screen, InputProcessor {
 	private void spawnRaindrop() {
 		Raindrop raindrop = raindropPool.obtain();
 		raindrop.getPosition().x = MathUtils.random(0, Gdx.graphics.getWidth() - 64);
-		raindrop.getPosition().y = Gdx.graphics.getHeight();
+		raindrop.getPosition().y = Gdx.graphics.getHeight() - 64;
 
 		raindrops.add(raindrop);
 		lastDropTime = TimeUtils.nanoTime();
 	}
 
-	public void playDropSound() {
-		dropSound.play();
-	}
-
-	private void incrementScore() {
-		score++;
-		scoreString = "Score: " + score;
-		scoreLayout.setText(font, scoreString);
-	}
-
-
 	@Override
 	public void dispose() {
 		batch.dispose();
 		raindropPool.clear();
-	}
-
-	public Batch getBatch(){
-		return this.batch;
 	}
 
 	@Override
@@ -173,11 +157,22 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 
 	private void handleInput() {
-		if (movingLeft) {
+		// Move bucket with keyboard
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			bucket.moveLeft();
 		}
-		if (movingRight) {
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			bucket.moveRight();
+		}
+
+		// Move bucket with mouse
+		if (Gdx.input.isTouched()) {
+			int screenX = Gdx.input.getX();
+			if (screenX < camera.viewportWidth / 2) {
+				bucket.moveLeft();
+			} else {
+				bucket.moveRight();
+			}
 		}
 	}
 
