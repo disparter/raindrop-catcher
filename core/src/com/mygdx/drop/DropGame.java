@@ -3,6 +3,7 @@ package com.mygdx.drop;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.mygdx.drop.screens.GameScreen;
 
 public class DropGame extends ApplicationAdapter {
     private GameScreen gameScreen;
