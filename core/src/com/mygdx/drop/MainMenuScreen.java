@@ -8,10 +8,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MainMenuScreen implements Screen {
 
-	final Drop game;
+	final DropGame game;
 	OrthographicCamera camera;
 
-	public MainMenuScreen(final Drop gam) {
+	public MainMenuScreen(final DropGame gam) {
 		game = gam;
 
 		camera = new OrthographicCamera();
