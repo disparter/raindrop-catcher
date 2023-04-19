@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -146,5 +147,9 @@ public class GameScreen implements Screen {
 	public void dispose() {
 		batch.dispose();
 		raindropPool.clear();
+	}
+
+	public Batch getBatch(){
+		return this.batch;
 	}
 }
