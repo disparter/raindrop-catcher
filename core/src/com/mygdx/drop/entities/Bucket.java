@@ -17,25 +17,20 @@ public class Bucket {
     private final Vector2 position = new Vector2();
     private final Sprite sprite;
 
+    private Rectangle hitbox;
+
     public Bucket() {
         Texture texture = new Texture(Gdx.files.internal("bucket.png"));
         sprite = new Sprite(texture);
         sprite.setSize(BUCKET_WIDTH, BUCKET_HEIGHT);
+        hitbox = new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
     }
 
     public void setPosition(float x, float y) {
         position.set(x, y);
         sprite.setPosition(x, y);
+        hitbox.setPosition(x, y);
     }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public Sprite getSprite() {
-        return sprite;
-    }
-
     public void dispose() {
         sprite.getTexture().dispose();
     }
@@ -44,8 +39,10 @@ public class Bucket {
         batch.draw(sprite, position.x, position.y);
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(position.x, position.y, sprite.getTexture().getWidth(), sprite.getTexture().getHeight());
+    public void catchRaindrop(Raindrop raindrop) {
+        if (hitbox.overlaps(raindrop.getHitbox())) {
+            raindrop.setIsCaught(true);
+        }
     }
 
     public void moveRight() {

@@ -82,6 +82,8 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		Array<Raindrop> raindropsToRemove = new Array<>();
+
 		handleInput();
 		bucket.update();
 		spawnRaindrop();
@@ -92,9 +94,19 @@ public class GameScreen implements Screen, InputProcessor {
 		font.draw(batch, "Drops Collected: " + dropsGathered, 0, 480);
 		bucket.draw(batch);
 		for (Raindrop raindrop : raindrops) {
-			raindrop.update(delta);
-			raindrop.draw(batch);
+			if (!raindrop.getIsCaught()) {
+				raindrop.update(delta);
+				if (raindrop.getPosition().y + raindrop.getHeight() < 0) {
+					raindropsToRemove.add(raindrop);
+				} else {
+					bucket.catchRaindrop(raindrop);
+				}
+				raindrop.draw(batch);
+			} else {
+				raindropsToRemove.add(raindrop);
+			}
 		}
+		raindrops.removeAll(raindropsToRemove, true);
 		batch.end();
 	}
 
@@ -131,6 +143,7 @@ public class GameScreen implements Screen, InputProcessor {
 	public void dispose() {
 		batch.dispose();
 		raindropPool.clear();
+		bucket.dispose();
 	}
 
 	@Override
