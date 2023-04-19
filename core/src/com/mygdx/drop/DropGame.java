@@ -3,6 +3,7 @@ package com.mygdx.drop;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.drop.entities.RaindropPool;
 
 public class DropGame extends ApplicationAdapter {
 

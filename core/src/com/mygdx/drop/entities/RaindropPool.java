@@ -1,4 +1,4 @@
-package com.mygdx.drop;
+package com.mygdx.drop.entities;
 
 import com.badlogic.gdx.utils.Array;
 

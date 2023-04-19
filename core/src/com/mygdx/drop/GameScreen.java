@@ -12,11 +12,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.drop.Bucket;
-import com.mygdx.drop.Constants;
-import com.mygdx.drop.DropGame;
-import com.mygdx.drop.Raindrop;
-import com.mygdx.drop.RaindropPool;
+import com.mygdx.drop.entities.Raindrop;
+import com.mygdx.drop.entities.RaindropPool;
 
 public class GameScreen implements Screen {
 
