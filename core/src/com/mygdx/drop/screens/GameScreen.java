@@ -25,6 +25,8 @@ import com.mygdx.drop.entities.RaindropPool;
 
 import java.util.Iterator;
 
+import static com.mygdx.drop.entities.Constants.MAX_DROPS;
+
 public class GameScreen implements Screen, InputProcessor {
 	final DropGame game;
 	private Sound dropSound;
@@ -131,12 +133,14 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 
 	private void spawnRaindrop() {
-		Raindrop raindrop = raindropPool.obtain();
-		raindrop.getPosition().x = MathUtils.random(0, Gdx.graphics.getWidth() - 64);
-		raindrop.getPosition().y = Gdx.graphics.getHeight() - 64;
+		if (raindrops.size < MAX_DROPS) {
+			Raindrop raindrop = raindropPool.obtain();
+			raindrop.getPosition().x = MathUtils.random(0, Gdx.graphics.getWidth() - 64);
+			raindrop.getPosition().y = Gdx.graphics.getHeight() - 64;
 
-		raindrops.add(raindrop);
-		lastDropTime = TimeUtils.nanoTime();
+			raindrops.add(raindrop);
+			lastDropTime = TimeUtils.nanoTime();
+		}
 	}
 
 	@Override
