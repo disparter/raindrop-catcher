@@ -10,7 +10,7 @@ public class DropGame extends ApplicationAdapter {
 
     @Override
     public void create () {
-        gameScreen = new GameScreen();
+        gameScreen = new GameScreen(this);
     }
 
     @Override
