@@ -9,7 +9,7 @@ public class DropGame extends Game {
     @Override
     public void create () {
         mainMenuScreen = new MainMenuScreen(this);
-        mainMenuScreen.show();
+        setScreen(mainMenuScreen);
     }
     public void render() {
         super.render();

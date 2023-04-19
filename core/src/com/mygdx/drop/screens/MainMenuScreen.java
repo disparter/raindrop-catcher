@@ -51,29 +51,19 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void show() {
-		// set the input processor
 		Gdx.input.setInputProcessor(stage);
 
-		Skin exitButtonSkin = setupSkin();
-		Skin startButtonSkin = setupSkin();
+		// create buttons
+		TextButton exitButton = new TextButton("EXIT", skin);
+		TextButton startButton = new TextButton("START", skin);
 
-		// create the buttons
-		TextButton exitButton = new TextButton("EXIT", exitButtonSkin);
-		TextButton startButton = new TextButton("START", startButtonSkin);
-
-		// set the position and size of the buttons
-		exitButton.setPosition(Gdx.graphics.getWidth() / 2 - exitButton.getWidth() / 2, Gdx.graphics.getHeight() / 2 - exitButton.getHeight() / 2 - 50);
-		startButton.setPosition(Gdx.graphics.getWidth() / 2 - startButton.getWidth() / 2, Gdx.graphics.getHeight() / 2 - startButton.getHeight() / 2 + 50);
-
-		// add a listener to the exit button to quit the game
+		// add listeners
 		exitButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Gdx.app.exit();
 			}
 		});
-
-		// add a listener to the start button to switch to the game screen
 		startButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -81,10 +71,15 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 
-		// add the buttons to the stage for rendering
+		// set button positions
+		exitButton.setPosition(Gdx.graphics.getWidth() / 2 - exitButton.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+		startButton.setPosition(Gdx.graphics.getWidth() / 2 - startButton.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 50);
+
+		// add buttons to stage
 		stage.addActor(exitButton);
 		stage.addActor(startButton);
 	}
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
