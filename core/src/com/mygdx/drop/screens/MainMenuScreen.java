@@ -84,7 +84,6 @@ public class MainMenuScreen implements Screen {
 		// add the buttons to the stage for rendering
 		stage.addActor(exitButton);
 		stage.addActor(startButton);
-		Gdx.input.setInputProcessor(stage);
 	}
 	@Override
 	public void render(float delta) {
