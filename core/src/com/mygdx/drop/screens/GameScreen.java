@@ -92,13 +92,10 @@ public class GameScreen implements Screen, InputProcessor {
 		font.draw(batch, "Drops Collected: " + dropsGathered, 0, 480);
 		bucket.draw(batch);
 		for (Raindrop raindrop : raindrops) {
+			raindrop.update(delta);
 			raindrop.draw(batch);
 		}
 		batch.end();
-
-		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
-			spawnRaindrop();
-		}
 	}
 
 	@Override

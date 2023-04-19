@@ -9,11 +9,13 @@ public class Raindrop {
     private Texture dropImage;
     private Vector2 position;
     private Rectangle bounds;
+    private float speed;
 
     public Raindrop(Texture dropImage) {
         this.dropImage = dropImage;
         position = new Vector2();
         bounds = new Rectangle();
+        speed = 1;
     }
 
     public Vector2 getPosition() {
@@ -30,8 +32,8 @@ public class Raindrop {
     }
 
     public void update(float delta) {
-        position.y -= 200 * delta;
-        bounds.setPosition(position.x, position.y);
+        bounds.y -= speed * delta;
+        setPosition(bounds.x, bounds.y);
     }
 
     public void draw(Batch batch) {
