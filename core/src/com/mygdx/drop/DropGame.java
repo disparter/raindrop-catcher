@@ -1,24 +1,16 @@
 package com.mygdx.drop;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.mygdx.drop.screens.GameScreen;
+import com.mygdx.drop.screens.MainMenuScreen;
 
 public class DropGame extends Game {
-    private GameScreen gameScreen;
-
-    private Sound dropSound;
-    private Sound rainMusic;
     private BitmapFont font;
+    private MainMenuScreen mainMenuScreen;
 
     @Override
     public void create () {
-        gameScreen = new GameScreen(this);
-        setScreen(gameScreen);
-        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-        rainMusic = Gdx.audio.newSound(Gdx.files.internal("rain.mp3"));
+        mainMenuScreen = new MainMenuScreen(this);
         font = new BitmapFont();
     }
 
@@ -27,13 +19,8 @@ public class DropGame extends Game {
     }
 
     public void dispose() {
-        gameScreen.dispose();
+        mainMenuScreen.dispose();
     }
-
-    public void playDropSound() {
-        dropSound.play();
-    }
-
     public BitmapFont getFont() {
         return font;
     }

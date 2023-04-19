@@ -2,6 +2,7 @@ package com.mygdx.drop.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -9,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.drop.DropGame;
 import com.mygdx.drop.entities.Bucket;
 import com.mygdx.drop.entities.Constants;
@@ -23,6 +23,8 @@ public class GameScreen implements Screen {
 	private static final Object SPEED_INCREMENT = 1;
 	final DropGame game;
 	private float lastDropTime;
+	private Sound dropSound;
+	private Sound rainMusic;
 
 	OrthographicCamera camera;
 	SpriteBatch batch;
@@ -39,6 +41,9 @@ public class GameScreen implements Screen {
 
 	public GameScreen(final DropGame game) {
 		this.game = game;
+
+		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+		rainMusic = Gdx.audio.newSound(Gdx.files.internal("rain.mp3"));
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
@@ -95,7 +100,7 @@ public class GameScreen implements Screen {
 			Raindrop raindrop = iter.next();
 			raindrop.update(delta);
 			if (raindrop.getBounds().overlaps(bucket.getBounds())) {
-				game.playDropSound();
+				playDropSound();
 				iter.remove();
 				incrementScore();
 			}
@@ -126,11 +131,8 @@ public class GameScreen implements Screen {
 
 	}
 
-	private void spawnRaindrop() {
-		Raindrop raindrop = raindropPool.obtain();
-		raindrop.setPosition(MathUtils.random(0, Gdx.graphics.getWidth() - raindrop.getWidth()), Gdx.graphics.getHeight());
-		raindrops.add(raindrop);
-		lastDropTime = TimeUtils.nanoTime();
+	public void playDropSound() {
+		dropSound.play();
 	}
 
 	private void incrementScore() {

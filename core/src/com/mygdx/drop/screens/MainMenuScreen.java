@@ -17,7 +17,6 @@ public class MainMenuScreen implements Screen {
 	SpriteBatch batch;
 	Texture playButtonImg;
 	Rectangle playButton;
-	Texture background;
 
 	public MainMenuScreen(final DropGame game) {
 		this.game = game;
@@ -30,7 +29,6 @@ public class MainMenuScreen implements Screen {
 		playButton.y = 200;
 		playButton.width = 250;
 		playButton.height = 100;
-		background = new Texture("bg.png");
 	}
 
 	@Override
@@ -42,7 +40,6 @@ public class MainMenuScreen implements Screen {
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
-		batch.draw(background, 0, 0, 800, 480);
 		batch.draw(playButtonImg, playButton.x, playButton.y, playButton.width, playButton.height);
 		batch.end();
 
@@ -86,6 +83,5 @@ public class MainMenuScreen implements Screen {
 	public void dispose() {
 		batch.dispose();
 		playButtonImg.dispose();
-		background.dispose();
 	}
 }
