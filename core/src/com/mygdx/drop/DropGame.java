@@ -1,42 +1,27 @@
 package com.mygdx.drop;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.drop.entities.RaindropPool;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 
 public class DropGame extends ApplicationAdapter {
-
-
-    SpriteBatch batch;
-    BitmapFont font;
-    GameScreen gameScreen;
+    private GameScreen gameScreen;
 
     @Override
-    public void create() {
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-
-        gameScreen = new GameScreen(this);
-        setScreen(gameScreen);
+    public void create () {
+        gameScreen = new GameScreen();
     }
 
     @Override
-    public void dispose() {
-        batch.dispose();
-        font.dispose();
+    public void render () {
+        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        gameScreen.render(Gdx.graphics.getDeltaTime());
+    }
+
+    @Override
+    public void dispose () {
         gameScreen.dispose();
-    }
-
-    public SpriteBatch getBatch() {
-        return batch;
-    }
-
-    public BitmapFont getFont() {
-        return font;
-    }
-    
-    public RaindropPool getRaindropPool() {
-        return gameScreen.getRaindropPool();
     }
 }
