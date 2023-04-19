@@ -1,27 +1,17 @@
 package com.mygdx.drop.entities;
 
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 
-public class RaindropPool {
-    private final Array<Raindrop> raindrops;
-    private final int maxSize;
+public class RaindropPool extends Pool<Raindrop> {
 
-    public RaindropPool(int maxSize) {
-        this.raindrops = new Array<>(maxSize);
-        this.maxSize = maxSize;
-
-        for (int i = 0; i < maxSize; i++) {
-            this.raindrops.add(new Raindrop());
-        }
+    @Override
+    protected Raindrop newObject() {
+        return new Raindrop();
     }
 
-    public Raindrop obtain() {
-        return raindrops.size > 0 ? raindrops.pop() : new Raindrop();
-    }
-
+    @Override
     public void free(Raindrop raindrop) {
-        raindrops.removeValue(raindrop, true);
-        allRaindrops.add(raindrop);
+        super.free(raindrop);
+        raindrop.reset();
     }
-
 }
