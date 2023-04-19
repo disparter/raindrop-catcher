@@ -13,8 +13,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.drop.DropGame;
 import com.mygdx.drop.entities.Bucket;
 import com.mygdx.drop.entities.Constants;
@@ -42,6 +44,10 @@ public class GameScreen implements Screen, InputProcessor {
 	String scoreString;
 	GlyphLayout scoreLayout;
 	BitmapFont font;
+
+	int dropsGathered;
+
+	long lastDropTime;
 
 	public GameScreen(final DropGame game) {
 		this.game = game;
@@ -73,48 +79,26 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void render(float delta) {
-		handleInput();
-
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		camera.update();
+		handleInput(); // A
+
+		bucket.update();
+		spawnRaindrop();
 
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
+		font.draw(batch, "Drops Collected: " + dropsGathered, 0, 480);
 		bucket.draw(batch);
 		for (Raindrop raindrop : raindrops) {
 			raindrop.draw(batch);
 		}
 		batch.end();
 
-		if (Gdx.input.isTouched()) {
-			Vector3 touchPos = new Vector3();
-			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			camera.unproject(touchPos);
-			bucket.setPosition(touchPos.x - Constants.BUCKET_WIDTH / 2f, Constants.BUCKET_HEIGHT);
-		}
-
-		if (MathUtils.random() < delta * Constants.RAINDROP_SPAWN_FREQUENCY) {
-			Raindrop raindrop = raindropPool.obtain();
-			raindrop.setPosition(MathUtils.random(0, Constants.VIEWPORT_WIDTH - Constants.RAINDROP_WIDTH), Constants.VIEWPORT_HEIGHT);
-			raindrops.add(raindrop);
-		}
-
-		Iterator<Raindrop> iter = raindrops.iterator();
-		while (iter.hasNext()) {
-			Raindrop raindrop = iter.next();
-			raindrop.update(delta);
-			if (raindrop.getBounds().overlaps(bucket.getBounds())) {
-				playDropSound();
-				iter.remove();
-				incrementScore();
-			}
-			if (raindrop.getPosition().y + raindrop.getHeight() < 0) {
-				iter.remove();
-				raindropPool.free(raindrop);
-			}
+		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
+			spawnRaindrop();
 		}
 	}
 
@@ -136,6 +120,15 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public void hide() {
 
+	}
+
+	private void spawnRaindrop() {
+		Raindrop raindrop = raindropPool.obtain();
+		raindrop.getPosition().x = MathUtils.random(0, Gdx.graphics.getWidth() - 64);
+		raindrop.getPosition().y = Gdx.graphics.getHeight();
+
+		raindrops.add(raindrop);
+		lastDropTime = TimeUtils.nanoTime();
 	}
 
 	public void playDropSound() {

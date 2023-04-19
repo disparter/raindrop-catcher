@@ -1,6 +1,7 @@
 package com.mygdx.drop.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -56,6 +57,15 @@ public class Bucket {
     public void moveLeft() {
         if (position.x > 0) {
             position.x -= BUCKET_MOVEMENT;
+        }
+    }
+
+    public void update() {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            moveLeft();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            moveRight();
         }
     }
 }

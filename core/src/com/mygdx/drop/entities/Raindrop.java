@@ -54,4 +54,5 @@ public class Raindrop {
     public int getWidth() {
         return dropImage.getWidth();
     }
+
 }
