@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -39,6 +40,7 @@ public class GameScreen implements Screen {
 	int score;
 	String scoreString;
 	GlyphLayout scoreLayout;
+	BitmapFont font;
 
 	public GameScreen(final DropGame game) {
 		this.game = game;
@@ -56,6 +58,8 @@ public class GameScreen implements Screen {
 
 		raindropPool = new RaindropPool();
 		raindrops = new Array<Raindrop>();
+
+		font = new BitmapFont();
 
 		score = 0;
 		scoreString = "Score: 0";
@@ -139,7 +143,7 @@ public class GameScreen implements Screen {
 	private void incrementScore() {
 		score++;
 		scoreString = "Score: " + score;
-		scoreLayout.setText(game.getFont(), scoreString);
+		scoreLayout.setText(font, scoreString);
 	}
 
 

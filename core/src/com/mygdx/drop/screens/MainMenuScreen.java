@@ -25,7 +25,7 @@ import static com.mygdx.drop.entities.Constants.VIEWPORT_HEIGHT;
 import static com.mygdx.drop.entities.Constants.VIEWPORT_WIDTH;
 
 public class MainMenuScreen implements Screen {
-	private final Skin skin;
+	private Skin skin;
 	private DropGame game;
 	private OrthographicCamera camera;
 	private Viewport viewport;
@@ -39,21 +39,56 @@ public class MainMenuScreen implements Screen {
 		this.viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, camera);
 		this.stage = new Stage(viewport, new SpriteBatch());
 		this.font = new BitmapFont();
-		this.skin = new Skin();
-		Label.LabelStyle labelStyle = new Label.LabelStyle();
-		labelStyle.font = font;
-		labelStyle.fontColor = Color.WHITE;
-		skin.add("default", labelStyle);
+		this.skin = setupSkin();
 		this.titleLabel = new Label("Main Menu", skin);
 		titleLabel.setPosition(VIEWPORT_WIDTH / 2f, 3 * VIEWPORT_HEIGHT / 4f, Align.center);
 		stage.addActor(titleLabel);
 		Gdx.input.setInputProcessor(stage);
 	}
 
+	private Skin setupSkin() {
+		Skin skin = new Skin();
+		Label.LabelStyle labelStyle = new Label.LabelStyle();
+		labelStyle.font = font;
+		labelStyle.fontColor = Color.WHITE;
+		skin.add("default", labelStyle);
+		return skin;
+	}
+
 	@Override
 	public void show() {
+		// set the input processor
+		Gdx.input.setInputProcessor(stage);
 
+		// create the buttons
+		TextButton exitButton = new TextButton("EXIT", skin);
+		TextButton startButton = new TextButton("START", skin);
+
+		// set the position and size of the buttons
+		exitButton.setPosition(Gdx.graphics.getWidth() / 2 - exitButton.getWidth() / 2, Gdx.graphics.getHeight() / 2 - exitButton.getHeight() / 2 - 50);
+		startButton.setPosition(Gdx.graphics.getWidth() / 2 - startButton.getWidth() / 2, Gdx.graphics.getHeight() / 2 - startButton.getHeight() / 2 + 50);
+
+		// add a listener to the exit button to quit the game
+		exitButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Gdx.app.exit();
+			}
+		});
+
+		// add a listener to the start button to switch to the game screen
+		startButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(new GameScreen(game));
+			}
+		});
+
+		// add the buttons to the stage for rendering
+		stage.addActor(exitButton);
+		stage.addActor(startButton);
 	}
+
 
 	@Override
 	public void render(float delta) {
