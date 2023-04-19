@@ -20,9 +20,8 @@ public class RaindropPool {
     }
 
     public void free(Raindrop raindrop) {
-        if (raindrops.size < maxSize) {
-            raindrop.reset();
-            raindrops.add(raindrop);
-        }
+        raindrops.removeValue(raindrop, true);
+        allRaindrops.add(raindrop);
     }
+
 }

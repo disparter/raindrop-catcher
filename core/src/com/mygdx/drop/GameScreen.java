@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.drop.Bucket;
 import com.mygdx.drop.Constants;
@@ -64,8 +65,8 @@ public class GameScreen implements Screen {
 
 	private void spawnRaindrop() {
 		Raindrop raindrop = raindropPool.obtain();
-		raindrop.init(dropImage.getWidth(), dropImage.getHeight());
-		raindrops.add(raindrop);
+		raindrop.setPosition(MathUtils.random(0, Constants.VIEWPORT_WIDTH - Constants.RAINDROP_WIDTH), Constants.VIEWPORT_HEIGHT);
+		stage.addActor(raindrop);
 	}
 
 	@Override
@@ -133,18 +134,20 @@ public class GameScreen implements Screen {
 		return new Rectangle(bucket.x, bucket.y, Constants.BUCKET_WIDTH, Constants.BUCKET_HEIGHT);
 	}
 
-	// unused interface methods
 	@Override
 	public void dispose() {
 		batch.dispose();
-		font.dispose();
-		dropImage.dispose();
-		bucketImage.dispose();
-		background.dispose();
+		textureAtlas.dispose();
+		rainMusic.dispose();
+		dropSound.dispose();
+		raindropPool.dispose();
 	}
 
 	@Override
-	public void resize(int width, int height) {}
+	public void resize(int width, int height) {
+		viewport.update(width, height, true);
+		raindropPool.update();
+	}
 
 	@Override
 	public void pause() {}
