@@ -43,7 +43,6 @@ public class MainMenuScreen implements Screen {
 		this.titleLabel = new Label("Main Menu", skin);
 		titleLabel.setPosition(VIEWPORT_WIDTH / 2f, 3 * VIEWPORT_HEIGHT / 4f, Align.center);
 		stage.addActor(titleLabel);
-		Gdx.input.setInputProcessor(stage);
 	}
 
 	private Skin setupSkin() {
@@ -85,36 +84,14 @@ public class MainMenuScreen implements Screen {
 		// add the buttons to the stage for rendering
 		stage.addActor(exitButton);
 		stage.addActor(startButton);
+		Gdx.input.setInputProcessor(stage);
 	}
-
-
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		Button exitButton = new TextButton("EXIT", skin, "default");
-		exitButton.setPosition(VIEWPORT_WIDTH / 2f, VIEWPORT_HEIGHT / 3f, Align.center);
-		exitButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.exit();
-			}
-		});
-
-		Button startButton = new TextButton("START", skin, "default");
-		startButton.setPosition(VIEWPORT_WIDTH / 2f, 2 * VIEWPORT_HEIGHT / 3f, Align.center);
-		startButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(game));
-			}
-		});
-
-		stage.addActor(exitButton);
-		stage.addActor(startButton);
-
-		stage.act(delta);
+		stage.act();
 		stage.draw();
 	}
 
