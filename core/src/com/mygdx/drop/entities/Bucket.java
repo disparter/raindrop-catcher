@@ -39,7 +39,12 @@ public class Bucket {
     }
 
     public void updateBounds() {
-        bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+        // update bucket position
+        float x = Gdx.input.getX() - 64 / 2;
+        bounds.setPosition(x, 20);
+
+        // update bucket sprite position
+        sprite.setPosition(bounds.x, bounds.y);
     }
 
     public Sprite getSprite() {
