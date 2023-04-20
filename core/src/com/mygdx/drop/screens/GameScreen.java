@@ -104,8 +104,8 @@ public class GameScreen implements Screen, InputProcessor {
 		batch.begin();
 		// Move the raindrops and remove any that are below the bottom of the screen
 		for (Raindrop raindrop : raindrops) {
-			batch.draw(raindrop.getSprite(), raindrop.getBounds().x, raindrop.getBounds().y);
 			raindrop.update(delta);
+			batch.draw(raindrop.getSprite(), raindrop.getBounds().x, raindrop.getBounds().y);
 
 			if (raindrop.getBounds().y + raindrop.getBounds().height < 0) {
 				raindropsToRemove.add(raindrop);
