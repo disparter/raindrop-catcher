@@ -2,15 +2,18 @@
 
 Raindrop Catcher is a simple game developed using the LibGDX game development framework. The objective of the game is to move the bucket and catch the raindrops falling from the sky. The game has different difficulty levels and can be played using both the mouse and keyboard.
 
+## Installation
+
+1. Clone the repository to your local machine
+2. Navigate to the project directory
+3. Run the following command to build the project: gradle desktop:dist
+4. Run the following command to start the game: java -jar desktop/build/libs/desktop-1.0.jar
+
 ## How to Play
 
-1. Clone or download the repository.
-2. Open the project using an IDE such as IntelliJ IDEA or Eclipse.
-3. Build and run the project.
-4. Use the mouse to move the bucket or the arrow keys on the keyboard (left and right) to move the bucket.
-5. Catch as many raindrops as you can. If a raindrop falls outside the bucket, the game is over.
-6. At the main menu, select the desired difficulty level (easy, normal, hard, or god). This will affect the speed of the raindrops falling from the sky.
-7. Enjoy the game!
+1. Use the mouse to move the bucket or the arrow keys on the keyboard (left and right) to move the bucket.
+2. Catch as many raindrops as you can. If a raindrop falls outside the bucket, the game is over.
+3. At the main menu, select the desired difficulty level (easy, normal, hard, or god). This will affect the speed of the raindrops falling from the sky.
 
 ## Requirements
 
