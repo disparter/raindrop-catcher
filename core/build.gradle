@@ -6,6 +6,7 @@ eclipse.project.name = appName + "-core"
 sourceSets {
     main {
         java.srcDirs = ['src/main/java']
+        resources.srcDirs = ["../assets"]
     }
     test {
         java.srcDirs = ['src/test/java']
