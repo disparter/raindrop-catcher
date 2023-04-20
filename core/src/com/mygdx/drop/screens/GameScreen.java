@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.drop.DropGame;
+import com.mygdx.drop.core.CollisionHandler;
 import com.mygdx.drop.entities.Bucket;
 import com.mygdx.drop.entities.Constants;
 import com.mygdx.drop.entities.Raindrop;
@@ -97,20 +98,15 @@ public class GameScreen implements Screen, InputProcessor {
 		font.draw(batch, "Drops Collected: " + dropsGathered, 0, 480);
 		bucket.draw(batch);
 		for (Raindrop raindrop : raindrops) {
-			if (!raindrop.getIsCaught()) {
-				raindrop.update(delta);
-				if (raindrop.getPosition().y + raindrop.getHeight() < 0) {
-					raindropsToRemove.add(raindrop);
-				} else {
-					bucket.catchRaindrop(raindrop);
-					if(raindrop.getIsCaught()){
-						dropsGathered++;
-						raindropsToRemove.add(raindrop);
-					}
-				}
-			} else {
+			if (CollisionHandler.collidesWith(bucket.getPosition().x, bucket.getPosition().y,
+					bucket.getBounds().width, bucket.getBounds().height,
+					raindrop.getPosition().x, raindrop.getPosition().y,
+					raindrop.getBounds().width, raindrop.getBounds().height)) {
 				raindropsToRemove.add(raindrop);
+				dropsGathered++;
 			}
+
+
 			raindrop.draw(batch);
 		}
 		raindrops.removeAll(raindropsToRemove, true);

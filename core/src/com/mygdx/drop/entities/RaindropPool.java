@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Pool;
 
 public class RaindropPool extends Pool<Raindrop> {
+
     @Override
-    protected Raindrop newObject() {
-        return new Raindrop( new Texture(Gdx.files.internal("droplet.png")));
+    public Raindrop newObject() {
+        return new Raindrop(0, 0, 0);
     }
 
     @Override
