@@ -9,10 +9,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -23,12 +21,12 @@ import com.mygdx.drop.entities.Constants;
 import com.mygdx.drop.entities.Raindrop;
 import com.mygdx.drop.entities.RaindropPool;
 
-import static com.mygdx.drop.entities.Constants.BUCKET_SPEED;
 import static com.mygdx.drop.entities.Constants.BUCKET_WIDTH;
 import static com.mygdx.drop.entities.Constants.MAX_DROPS;
 
 public class GameScreen implements Screen, InputProcessor {
 	final DropGame game;
+	private final int speed;
 	private Sound dropSound;
 	private Sound rainMusic;
 	private boolean movingLeft;
@@ -51,7 +49,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	long lastDropTime;
 
-	public GameScreen(final DropGame game) {
+	public GameScreen(final DropGame game, int speed) {
 		this.game = game;
 
 		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
@@ -72,6 +70,8 @@ public class GameScreen implements Screen, InputProcessor {
 		score = 0;
 		scoreString = "Score: 0";
 		scoreLayout = new GlyphLayout();
+		
+		this.speed = speed;
 	}
 
 	@Override
@@ -163,6 +163,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	private void spawnRaindrop() {
 		if (raindrops.size < MAX_DROPS) {
+			raindropPool.setSpeedLevel(speed);
 			Raindrop raindrop = raindropPool.obtain();
 			raindrop.getBounds().x = MathUtils.random(0, Gdx.graphics.getWidth() - 64);
 			raindrop.getBounds().y = Gdx.graphics.getHeight() - 64;

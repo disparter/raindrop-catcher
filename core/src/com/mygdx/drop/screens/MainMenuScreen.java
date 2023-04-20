@@ -6,11 +6,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -28,6 +31,8 @@ public class MainMenuScreen implements Screen {
 	private Stage stage;
 	private BitmapFont font;
 	private Label titleLabel;
+	private Label speedLabel;
+	private int speed;
 
 	public MainMenuScreen(DropGame game) {
 		this.game = game;
@@ -37,6 +42,7 @@ public class MainMenuScreen implements Screen {
 		this.font = new BitmapFont();
 		this.skin = setupSkin();
 		this.titleLabel = new Label("Main Menu", skin);
+		this.speedLabel = new Label("Level: ", skin);
 		titleLabel.setPosition(VIEWPORT_WIDTH / 2f, 3 * VIEWPORT_HEIGHT / 4f, Align.center);
 		stage.addActor(titleLabel);
 	}
@@ -50,8 +56,13 @@ public class MainMenuScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 
 		// create buttons
-		TextButton exitButton = new TextButton("EXIT", skin);
-		TextButton startButton = new TextButton("START", skin);
+		final TextButton exitButton = new TextButton("EXIT", skin);
+		final TextButton startButton = new TextButton("START", skin);
+
+		// level selector
+		final SelectBox<String> speedBox = new SelectBox<>(skin);
+		speedBox.setItems("Easy", "Normal", "Hard", "God");
+		speedBox.setSelected("Normal"); // Default to normal speed
 
 		// add listeners
 		exitButton.addListener(new ClickListener() {
@@ -63,17 +74,42 @@ public class MainMenuScreen implements Screen {
 		startButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(new GameScreen(game));
+				game.setScreen(new GameScreen(game, speed));
+			}
+		});
+		speedBox.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				// Get the selected speed box level
+				int selectedIndex = speedBox.getSelectedIndex();
+
+				// Set the speed based on the selected level
+				switch (selectedIndex) {
+					// Easy
+					case 1:
+						speed = 2; // Normal
+						break;
+					case 2:
+						speed = 3; // Hard
+						break;
+					case 3:
+						speed = 4; // God
+						break;
+					default:
+						speed = 1; // Default to easy if something went wrong
+				}
 			}
 		});
 
 		// set button positions
 		exitButton.setPosition(Gdx.graphics.getWidth() / 2 - exitButton.getWidth() / 2, Gdx.graphics.getHeight() / 2);
 		startButton.setPosition(Gdx.graphics.getWidth() / 2 - startButton.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 50);
+		speedBox.setPosition(Gdx.graphics.getWidth() / 2 - startButton.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 100);
 
 		// add buttons to stage
 		stage.addActor(exitButton);
 		stage.addActor(startButton);
+		stage.addActor(speedBox);
 	}
 
 	@Override
