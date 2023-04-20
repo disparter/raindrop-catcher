@@ -80,23 +80,31 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void render(float delta) {
-		// Clear the screen
+		// clear the screen with a dark blue color
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		Array<Raindrop> raindropsToRemove = new Array<>();
 
-		// Move the bucket
-		handleInput(delta);
-		bucket.updateBounds();
+		// update the camera's matrices
+		camera.update();
+
+		// render the bucket
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		batch.draw(bucket.getSprite(), bucket.getBounds().x, bucket.getBounds().y);
+		batch.end();
+
 
 		// Spawn a new raindrop if it's time
 		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
 			spawnRaindrop();
 		}
 
+		batch.begin();
 		// Move the raindrops and remove any that are below the bottom of the screen
 		for (Raindrop raindrop : raindrops) {
+			batch.draw(raindrop.getSprite(), raindrop.getBounds().x, raindrop.getBounds().y);
 			raindrop.update(delta);
 
 			if (raindrop.getBounds().y + raindrop.getBounds().height < 0) {
@@ -110,28 +118,21 @@ public class GameScreen implements Screen, InputProcessor {
 			}
 		}
 
+		handleInput();
+
 		// Remove any raindrops that were caught or have gone off the screen
 		raindrops.removeAll(raindropsToRemove, false);
 		raindropsToRemove.clear();
-
-		// Draw the bucket and the raindrops
-		batch.begin();
-		Sprite bucketSprite = bucket.getSprite();
-		batch.draw(bucketSprite, bucketSprite.getX(), bucketSprite.getY());
-		for (Raindrop raindrop : raindrops) {
-			Sprite raindropSprite = raindrop.getSprite();
-			batch.draw(raindropSprite, raindropSprite.getX(), raindropSprite.getY());
-		}
 		font.draw(batch, "Drops Collected: " + dropsGathered, 0, 480);
 		batch.end();
 	}
 
-	private void handleInput(float delta) {
+	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			bucket.moveTo(bucket.getBounds().x - BUCKET_SPEED * Gdx.graphics.getDeltaTime(), bucket.getBounds().y);
+			bucket.moveTo(bucket.getBounds().x - BUCKET_WIDTH / 2, bucket.getBounds().y);
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			bucket.moveTo(bucket.getBounds().x + BUCKET_SPEED * Gdx.graphics.getDeltaTime(), bucket.getBounds().y);
+			bucket.moveTo(bucket.getBounds().x + BUCKET_WIDTH / 2, bucket.getBounds().y);
 		}
 
 		if (Gdx.input.isTouched()) {
