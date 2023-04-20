@@ -12,4 +12,8 @@ public class CollisionHandler {
         return Intersector.overlaps(rect1, rect2);
     }
 
+    public static boolean collidesWith(Rectangle rect1, Rectangle rect2) {
+        return Intersector.overlaps(rect1, rect2);
+    }
+
 }
