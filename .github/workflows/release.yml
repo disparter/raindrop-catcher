@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - master
+    # Only trigger for merged PRs
+    # This filters out PRs that were closed without merging
+    # because those should not be considered releases
+    # See https://help.github.com/en/articles/events-that-trigger-workflows#pull-request-event-pull_request
+    # and https://help.github.com/en/actions/reference/events-that-trigger-workflows#pull_request
+    # for more information on this event
+    # and its different properties and types.
+    # Note that `pull_request.merged` is not available in the `closed` event
+    # so we need to filter the events using the `pull_request.closed_at` property
+    # and checking if it is greater than the `pull_request.merged_at` property
+    # See https://github.community/t/pull-request-merged-event-for-actions/17133/7
+    # for more information on how to filter for merged PRs using the `closed` event
+    if: >
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.closed_at == github.event.pull_request.merged_at
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up JDK 8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: Build JAR
+        run: ./gradlew desktop:dist
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Release of version ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: raindrop-catcher-${{ github.ref }}.jar
+          path: desktop/build/libs/RaindropCatcher-1.0.jar
