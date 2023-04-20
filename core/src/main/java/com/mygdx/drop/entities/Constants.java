@@ -8,4 +8,8 @@ public class Constants {
     public static final int RAINDROP_WIDTH = 32;
     public static final int RAINDROP_HEIGHT = 32;
     public static final int MAX_DROPS = 10;
+
+    public static final int DROPS_COLLECTED_MESSAGE_POSITION_Y = 480;
+    public static final int LAST_DROP_FREQUENCY_IN_NANOS = 1000000000;
+
 }

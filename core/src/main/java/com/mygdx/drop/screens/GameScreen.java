@@ -22,15 +22,17 @@ import com.mygdx.drop.entities.Raindrop;
 import com.mygdx.drop.entities.RaindropPool;
 
 import static com.mygdx.drop.entities.Constants.BUCKET_WIDTH;
+import static com.mygdx.drop.entities.Constants.DROPS_COLLECTED_MESSAGE_POSITION_Y;
+import static com.mygdx.drop.entities.Constants.LAST_DROP_FREQUENCY_IN_NANOS;
 import static com.mygdx.drop.entities.Constants.MAX_DROPS;
+import static com.mygdx.drop.entities.Constants.RAINDROP_HEIGHT;
+import static com.mygdx.drop.entities.Constants.RAINDROP_WIDTH;
 
 public class GameScreen implements Screen, InputProcessor {
 	final DropGame game;
 	private final int speed;
-	private Sound dropSound;
-	private Sound rainMusic;
-	private boolean movingLeft;
-	private boolean movingRight;
+	private final Sound dropSound;
+	private final Sound rainMusic;
 	OrthographicCamera camera;
 	SpriteBatch batch;
 
@@ -98,7 +100,7 @@ public class GameScreen implements Screen, InputProcessor {
 		handleInput();
 
 		// Spawn a new raindrop if it's time
-		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
+		if (TimeUtils.nanoTime() - lastDropTime > LAST_DROP_FREQUENCY_IN_NANOS) {
 			spawnRaindrop();
 		}
 
@@ -122,7 +124,7 @@ public class GameScreen implements Screen, InputProcessor {
 		// Remove any raindrops that were caught or have gone off the screen
 		raindrops.removeAll(raindropsToRemove, false);
 		raindropsToRemove.clear();
-		font.draw(batch, "Drops Collected: " + dropsGathered, 0, 480);
+		font.draw(batch, "Drops Collected: " + dropsGathered, 0, DROPS_COLLECTED_MESSAGE_POSITION_Y);
 		batch.end();
 	}
 
@@ -165,8 +167,8 @@ public class GameScreen implements Screen, InputProcessor {
 		if (raindrops.size < MAX_DROPS) {
 			raindropPool.setSpeedLevel(speed);
 			Raindrop raindrop = raindropPool.obtain();
-			raindrop.getBounds().x = MathUtils.random(0, Gdx.graphics.getWidth() - 64);
-			raindrop.getBounds().y = Gdx.graphics.getHeight() - 64;
+			raindrop.getBounds().x = MathUtils.random(0, Gdx.graphics.getWidth() - RAINDROP_WIDTH*2);
+			raindrop.getBounds().y = Gdx.graphics.getHeight() - RAINDROP_HEIGHT*2;
 
 			raindrops.add(raindrop);
 			lastDropTime = TimeUtils.nanoTime();
