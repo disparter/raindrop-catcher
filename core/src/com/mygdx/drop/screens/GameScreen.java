@@ -109,7 +109,7 @@ public class GameScreen implements Screen, InputProcessor {
 			batch.draw(raindrop.getSprite(), raindrop.getBounds().x, raindrop.getBounds().y);
 
 			if (raindrop.getBounds().y + raindrop.getBounds().height < 0) {
-				raindropsToRemove.add(raindrop);
+				game.setScreen(new GameOverScreen(game));
 			}
 
 			// Check for collisions between the raindrops and the bucket
