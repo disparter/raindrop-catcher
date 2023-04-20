@@ -11,7 +11,7 @@ Raindrop Catcher is a simple game developed using the LibGDX game development fr
 
 ## How to Play
 
-1. Use the mouse to move the bucket or the arrow keys on the keyboard (left and right) to move the bucket.
+1. Use the mouse to move the bucket or the arrow keys on the keyboard (left|A and right|D) to move the bucket.
 2. Catch as many raindrops as you can. If a raindrop falls outside the bucket, the game is over.
 3. At the main menu, select the desired difficulty level (easy, normal, hard, or god). This will affect the speed of the raindrops falling from the sky.
 

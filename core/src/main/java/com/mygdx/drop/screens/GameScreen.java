@@ -127,10 +127,10 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 
 	private void handleInput() {
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 			bucket.moveTo(bucket.getBounds().x - BUCKET_WIDTH / 2, bucket.getBounds().y);
 		}
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
 			bucket.moveTo(bucket.getBounds().x + BUCKET_WIDTH / 2, bucket.getBounds().y);
 		}
 
@@ -182,21 +182,11 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
-			movingLeft = true;
-		} else if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-			movingRight = true;
-		}
 		return true;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
-			movingLeft = false;
-		} else if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-			movingRight = false;
-		}
 		return true;
 	}
 
