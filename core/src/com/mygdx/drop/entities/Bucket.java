@@ -16,7 +16,6 @@ import static com.mygdx.drop.entities.Constants.VIEWPORT_WIDTH;
 public class Bucket {
     private final Vector2 position = new Vector2();
     private final Sprite sprite;
-
     private Rectangle hitbox;
 
     public Bucket() {
@@ -65,5 +64,9 @@ public class Bucket {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             moveRight();
         }
+    }
+
+    public void updateBounds() {
+        hitbox.set(position.x, position.y, sprite.getRegionWidth(), sprite.getRegionHeight());
     }
 }

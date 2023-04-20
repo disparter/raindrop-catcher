@@ -88,6 +88,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 		handleInput();
 		bucket.update();
+		bucket.updateBounds();
 		spawnRaindrop();
 
 		batch.setProjectionMatrix(camera.combined);
@@ -102,6 +103,10 @@ public class GameScreen implements Screen, InputProcessor {
 					raindropsToRemove.add(raindrop);
 				} else {
 					bucket.catchRaindrop(raindrop);
+					if(raindrop.getIsCaught()){
+						dropsGathered++;
+						raindropsToRemove.add(raindrop);
+					}
 				}
 			} else {
 				raindropsToRemove.add(raindrop);
