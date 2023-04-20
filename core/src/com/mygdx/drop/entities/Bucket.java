@@ -16,10 +16,11 @@ import static com.mygdx.drop.entities.Constants.VIEWPORT_WIDTH;
 public class Bucket {
     private final Vector2 position = new Vector2();
     private final Sprite sprite;
+    private final Texture texture;
     private Rectangle hitbox;
 
     public Bucket() {
-        Texture texture = new Texture(Gdx.files.internal("bucket.png"));
+        texture = new Texture(Gdx.files.internal("bucket.png"));
         sprite = new Sprite(texture);
         sprite.setSize(BUCKET_WIDTH, BUCKET_HEIGHT);
         hitbox = new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
@@ -39,8 +40,10 @@ public class Bucket {
     }
 
     public void catchRaindrop(Raindrop raindrop) {
-        boolean result = raindrop.getPosition().y < sprite.getY() + sprite.getHeight()
-                && raindrop.getPosition().x > sprite.getX() && raindrop.getPosition().x < sprite.getX() + sprite.getWidth();
+        boolean result =
+                   raindrop.getPosition().y < sprite.getY() + texture.getHeight()
+                && raindrop.getPosition().x + raindrop.getWidth() > sprite.getX()
+                && raindrop.getPosition().x < sprite.getX() + sprite.getWidth();
 
         raindrop.setIsCaught(result);
     }
@@ -67,6 +70,6 @@ public class Bucket {
     }
 
     public void updateBounds() {
-        hitbox.set(position.x, position.y, sprite.getRegionWidth(), sprite.getRegionHeight());
+        hitbox.set(position.x, position.y, texture.getWidth(), texture.getHeight());
     }
 }

@@ -31,10 +31,6 @@ public class Raindrop {
         }
     }
 
-    public Rectangle getHitbox() {
-        return hitbox;
-    }
-
     public boolean getIsCaught() {
         return isCaught;
     }
@@ -49,5 +45,9 @@ public class Raindrop {
 
     public float getHeight() {
         return dropImage.getHeight();
+    }
+
+    public float getWidth() {
+        return dropImage.getWidth();
     }
 }
