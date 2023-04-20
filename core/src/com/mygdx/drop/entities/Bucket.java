@@ -40,9 +40,10 @@ public class Bucket {
     }
 
     public void catchRaindrop(Raindrop raindrop) {
-        if (hitbox.overlaps(raindrop.getHitbox())) {
-            raindrop.setIsCaught(true);
-        }
+        boolean result = raindrop.getPosition().y < sprite.getY() + sprite.getHeight()
+                && raindrop.getPosition().x > sprite.getX() && raindrop.getPosition().x < sprite.getX() + sprite.getWidth();
+
+        raindrop.setIsCaught(result);
     }
 
     public void moveRight() {

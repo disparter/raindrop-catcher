@@ -103,10 +103,10 @@ public class GameScreen implements Screen, InputProcessor {
 				} else {
 					bucket.catchRaindrop(raindrop);
 				}
-				raindrop.draw(batch);
 			} else {
 				raindropsToRemove.add(raindrop);
 			}
+			raindrop.draw(batch);
 		}
 		raindrops.removeAll(raindropsToRemove, true);
 		batch.end();
