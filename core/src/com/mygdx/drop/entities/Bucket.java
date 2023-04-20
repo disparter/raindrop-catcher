@@ -1,6 +1,7 @@
 package com.mygdx.drop.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -43,5 +44,14 @@ public class Bucket {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public void move(float delta) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            this.moveLeft(delta);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            this.moveRight(delta);
+        }
     }
 }

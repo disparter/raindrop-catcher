@@ -82,10 +82,9 @@ public class GameScreen implements Screen, InputProcessor {
 
 		Array<Raindrop> raindropsToRemove = new Array<>();
 
-		// Update the bucket bounds
+		// Move the bucket
+		bucket.move(delta);
 		bucket.updateBounds();
-
-		batch.begin();
 
 		// Spawn a new raindrop if it's time
 		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
@@ -98,23 +97,31 @@ public class GameScreen implements Screen, InputProcessor {
 			if (raindrop.getBounds().y + raindrop.getBounds().height < 0) {
 				raindropsToRemove.add(raindrop);
 			}
+		}
+
+		// Check for collisions between the raindrops and the bucket
+		for (Raindrop raindrop : raindrops) {
 			if (CollisionHandler.collidesWith(bucket.getBounds(), raindrop.getBounds())) {
 				dropsGathered++;
 				raindropsToRemove.add(raindrop);
 			}
-			batch.draw(raindrop.getRaindropImage(), raindrop.getBounds().x, raindrop.getBounds().y);
 		}
 
 		// Remove any raindrops that were caught or have gone off the screen
 		raindrops.removeAll(raindropsToRemove, true);
 		raindropsToRemove.clear();
 
-		// Draw the bucket
+		// Draw the bucket and the raindrops
+		batch.begin();
 		Sprite bucketSprite = bucket.getSprite();
-		batch.draw(bucketSprite, bucket.getBounds().x, bucket.getBounds().y);
+		batch.draw(bucketSprite, bucketSprite.getX(), bucketSprite.getY());
+		for (Raindrop raindrop : raindrops) {
+			batch.draw(raindrop.getRaindropImage(), raindrop.getBounds().x, raindrop.getBounds().y);
+		}
 		font.draw(batch, "Drops Collected: " + dropsGathered, 0, 480);
 		batch.end();
 	}
+
 
 
 	@Override
