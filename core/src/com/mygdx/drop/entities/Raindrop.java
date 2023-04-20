@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.drop.core.CollisionHandler;
 
 public class Raindrop {
     private Texture dropImage;
@@ -11,6 +12,7 @@ public class Raindrop {
     private float speed;
     private Rectangle hitbox;
     private boolean isCaught;
+    private boolean visible;
 
     public Raindrop(Texture dropImage) {
         this.dropImage = dropImage;
@@ -24,10 +26,13 @@ public class Raindrop {
         return position;
     }
 
-    public void update(float delta) {
-        if (!isCaught) {
-            position.y -= speed * delta;
-            hitbox.setPosition(position.x, position.y);
+    public void update(float deltaTime) {
+        position.y -= speed * deltaTime;
+
+        Rectangle screenRect = new Rectangle(0, 0, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+
+        if (CollisionHandler.isColliding(hitbox, screenRect)) {
+            isCaught = true;
         }
     }
 
@@ -46,8 +51,10 @@ public class Raindrop {
     public float getHeight() {
         return dropImage.getHeight();
     }
-
     public float getWidth() {
         return dropImage.getWidth();
+    }
+    public Rectangle getHitbox() {
+        return hitbox;
     }
 }

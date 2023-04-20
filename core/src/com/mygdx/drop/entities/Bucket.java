@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.drop.core.CollisionHandler;
 
 import static com.mygdx.drop.entities.Constants.BUCKET_HEIGHT;
 import static com.mygdx.drop.entities.Constants.BUCKET_MOVEMENT;
@@ -18,12 +19,14 @@ public class Bucket {
     private final Sprite sprite;
     private final Texture texture;
     private Rectangle hitbox;
+    private int raindropsGathered;
 
     public Bucket() {
         texture = new Texture(Gdx.files.internal("bucket.png"));
         sprite = new Sprite(texture);
         sprite.setSize(BUCKET_WIDTH, BUCKET_HEIGHT);
         hitbox = new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
+        raindropsGathered = 0;
     }
 
     public void setPosition(float x, float y) {
@@ -39,14 +42,17 @@ public class Bucket {
         batch.draw(sprite, position.x, position.y);
     }
 
-    public void catchRaindrop(Raindrop raindrop) {
-        boolean result =
-                   raindrop.getPosition().y < sprite.getY() + texture.getHeight()
-                && raindrop.getPosition().x + raindrop.getWidth() > sprite.getX()
-                && raindrop.getPosition().x < sprite.getX() + sprite.getWidth();
+    public boolean catchRaindrop(Raindrop raindrop) {
+        Rectangle bucketRect = new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
+        Rectangle raindropRect = raindrop.getHitbox();
 
-        raindrop.setIsCaught(result);
+        if (CollisionHandler.isColliding(bucketRect, raindropRect)) {
+            raindropsGathered++;
+            return true;
+        }
+        return false;
     }
+
 
     public void moveRight() {
         if (position.x < VIEWPORT_WIDTH - sprite.getWidth()) {
@@ -71,5 +77,9 @@ public class Bucket {
 
     public void updateBounds() {
         hitbox.set(position.x, position.y, texture.getWidth(), texture.getHeight());
+    }
+
+    public int getRaindropsGathered() {
+        return raindropsGathered;
     }
 }
