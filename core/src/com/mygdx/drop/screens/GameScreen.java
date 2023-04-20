@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -96,7 +97,8 @@ public class GameScreen implements Screen, InputProcessor {
 
 		// Move the raindrops and remove any that are below the bottom of the screen
 		for (Raindrop raindrop : raindrops) {
-			raindrop.move(delta);
+			raindrop.update(delta);
+
 			if (raindrop.getBounds().y + raindrop.getBounds().height < 0) {
 				raindropsToRemove.add(raindrop);
 			}
@@ -117,7 +119,8 @@ public class GameScreen implements Screen, InputProcessor {
 		Sprite bucketSprite = bucket.getSprite();
 		batch.draw(bucketSprite, bucketSprite.getX(), bucketSprite.getY());
 		for (Raindrop raindrop : raindrops) {
-			batch.draw(raindrop.getRaindropImage(), raindrop.getBounds().x, raindrop.getBounds().y);
+			Sprite raindropSprite = raindrop.getSprite();
+			batch.draw(raindropSprite, raindropSprite.getX(), raindropSprite.getY());
 		}
 		font.draw(batch, "Drops Collected: " + dropsGathered, 0, 480);
 		batch.end();
