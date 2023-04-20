@@ -1,6 +1,25 @@
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-sourceSets.main.java.srcDirs = [ "src/" ]
-
 eclipse.project.name = appName + "-core"
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+        compileClasspath += main.output + configurations.testRuntimeClasspath
+        runtimeClasspath += main.output + configurations.testRuntimeClasspath
+    }
+}
+
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+}
