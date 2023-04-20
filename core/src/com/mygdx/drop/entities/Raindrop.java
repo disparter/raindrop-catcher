@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 import static com.mygdx.drop.entities.Constants.RAINDROP_HEIGHT;
 import static com.mygdx.drop.entities.Constants.RAINDROP_WIDTH;
