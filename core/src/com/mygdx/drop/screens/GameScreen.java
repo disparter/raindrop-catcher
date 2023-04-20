@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.drop.DropGame;
@@ -21,6 +22,8 @@ import com.mygdx.drop.entities.Constants;
 import com.mygdx.drop.entities.Raindrop;
 import com.mygdx.drop.entities.RaindropPool;
 
+import static com.mygdx.drop.entities.Constants.BUCKET_SPEED;
+import static com.mygdx.drop.entities.Constants.BUCKET_WIDTH;
 import static com.mygdx.drop.entities.Constants.MAX_DROPS;
 
 public class GameScreen implements Screen, InputProcessor {
@@ -83,7 +86,7 @@ public class GameScreen implements Screen, InputProcessor {
 		Array<Raindrop> raindropsToRemove = new Array<>();
 
 		// Move the bucket
-		bucket.move(delta);
+		handleInput(delta);
 		bucket.updateBounds();
 
 		// Spawn a new raindrop if it's time
@@ -120,8 +123,21 @@ public class GameScreen implements Screen, InputProcessor {
 		batch.end();
 	}
 
+	private void handleInput(float delta) {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			bucket.moveTo(bucket.getBounds().x - BUCKET_SPEED * Gdx.graphics.getDeltaTime(), bucket.getBounds().y);
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			bucket.moveTo(bucket.getBounds().x + BUCKET_SPEED * Gdx.graphics.getDeltaTime(), bucket.getBounds().y);
+		}
 
-
+		if (Gdx.input.isTouched()) {
+			Vector3 touchPos = new Vector3();
+			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(touchPos);
+			bucket.moveTo(touchPos.x - BUCKET_WIDTH / 2, bucket.getBounds().y);
+		}
+	}
 	@Override
 	public void resize(int width, int height) {
 

@@ -1,7 +1,6 @@
 package com.mygdx.drop.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,20 +17,6 @@ public class Bucket {
 
     public Rectangle getBounds() {
         return bounds;
-    }
-
-    public void moveLeft(float deltaTime) {
-        bounds.x -= speed * deltaTime;
-        if (bounds.x < 0) {
-            bounds.x = 0;
-        }
-    }
-
-    public void moveRight(float deltaTime) {
-        bounds.x += speed * deltaTime;
-        if (bounds.x > 320 - 64) {
-            bounds.x = 320 - 64;
-        }
     }
 
     public void dispose(){
@@ -51,12 +36,8 @@ public class Bucket {
         return sprite;
     }
 
-    public void move(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.moveLeft(delta);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.moveRight(delta);
-        }
+    public void moveTo(float x, float y) {
+        bounds.x = x;
+        bounds.y = y;
     }
 }
