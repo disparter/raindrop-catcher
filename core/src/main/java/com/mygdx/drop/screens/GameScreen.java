@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.drop.DropGame;
@@ -27,6 +29,7 @@ import static com.mygdx.drop.entities.Constants.LAST_DROP_FREQUENCY_IN_NANOS;
 import static com.mygdx.drop.entities.Constants.MAX_DROPS;
 import static com.mygdx.drop.entities.Constants.RAINDROP_HEIGHT;
 import static com.mygdx.drop.entities.Constants.RAINDROP_WIDTH;
+import static com.mygdx.drop.entities.Constants.VIEWPORT_WIDTH;
 
 public class GameScreen implements Screen, InputProcessor {
 	final DropGame game;
@@ -42,13 +45,8 @@ public class GameScreen implements Screen, InputProcessor {
 	Array<Raindrop> raindrops;
 
 	// game state
-	int score;
-	String scoreString;
-	GlyphLayout scoreLayout;
 	BitmapFont font;
-
 	int dropsGathered;
-
 	long lastDropTime;
 
 	public GameScreen(final DropGame game, int speed) {
@@ -69,11 +67,8 @@ public class GameScreen implements Screen, InputProcessor {
 
 		font = new BitmapFont();
 
-		score = 0;
-		scoreString = "Score: 0";
-		scoreLayout = new GlyphLayout();
-		
 		this.speed = speed;
+
 	}
 
 	@Override
@@ -121,10 +116,14 @@ public class GameScreen implements Screen, InputProcessor {
 			}
 		}
 
+		float speed = (float) Math.round(raindropPool.getSpeed() * 100) / 100;
+
 		// Remove any raindrops that were caught or have gone off the screen
 		raindrops.removeAll(raindropsToRemove, false);
 		raindropsToRemove.clear();
 		font.draw(batch, "Drops Collected: " + dropsGathered, 0, DROPS_COLLECTED_MESSAGE_POSITION_Y);
+		font.draw(batch, "Speed: " + speed, VIEWPORT_WIDTH - 150, DROPS_COLLECTED_MESSAGE_POSITION_Y);
+
 		batch.end();
 	}
 
@@ -165,7 +164,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	private void spawnRaindrop() {
 		if (raindrops.size < MAX_DROPS) {
-			raindropPool.setSpeedLevel(speed);
+			raindropPool.setSpeedLevel(speed, dropsGathered);
 			Raindrop raindrop = raindropPool.obtain();
 			raindrop.getBounds().x = MathUtils.random(0, Gdx.graphics.getWidth() - RAINDROP_WIDTH*2);
 			raindrop.getBounds().y = Gdx.graphics.getHeight() - RAINDROP_HEIGHT*2;
