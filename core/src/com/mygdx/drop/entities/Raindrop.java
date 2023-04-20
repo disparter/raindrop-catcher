@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.mygdx.drop.entities.Constants.RAINDROP_HEIGHT;
+import static com.mygdx.drop.entities.Constants.RAINDROP_WIDTH;
+
 public class Raindrop {
     private final float speed;
     private final Sprite sprite;
@@ -13,7 +16,7 @@ public class Raindrop {
 
     public Raindrop(float x, float y, float speed) {
         sprite = new Sprite(new Texture(Gdx.files.internal("droplet.png")));
-        bounds = new Rectangle(x, y, 32, 32);
+        bounds = new Rectangle(x, y, RAINDROP_WIDTH, RAINDROP_HEIGHT);
         this.speed = speed;
     }
 

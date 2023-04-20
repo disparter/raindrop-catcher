@@ -95,6 +95,7 @@ public class GameScreen implements Screen, InputProcessor {
 		batch.draw(bucket.getSprite(), bucket.getBounds().x, bucket.getBounds().y);
 		batch.end();
 
+		handleInput();
 
 		// Spawn a new raindrop if it's time
 		if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
@@ -117,8 +118,6 @@ public class GameScreen implements Screen, InputProcessor {
 				raindropsToRemove.add(raindrop);
 			}
 		}
-
-		handleInput();
 
 		// Remove any raindrops that were caught or have gone off the screen
 		raindrops.removeAll(raindropsToRemove, false);
