@@ -97,10 +97,8 @@ public class GameScreen implements Screen, InputProcessor {
 			if (raindrop.getBounds().y + raindrop.getBounds().height < 0) {
 				raindropsToRemove.add(raindrop);
 			}
-		}
 
-		// Check for collisions between the raindrops and the bucket
-		for (Raindrop raindrop : raindrops) {
+			// Check for collisions between the raindrops and the bucket
 			if (CollisionHandler.collidesWith(bucket.getBounds(), raindrop.getBounds())) {
 				dropsGathered++;
 				raindropsToRemove.add(raindrop);
@@ -108,7 +106,7 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 
 		// Remove any raindrops that were caught or have gone off the screen
-		raindrops.removeAll(raindropsToRemove, true);
+		raindrops.removeAll(raindropsToRemove, false);
 		raindropsToRemove.clear();
 
 		// Draw the bucket and the raindrops
