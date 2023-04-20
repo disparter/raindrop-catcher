@@ -6,20 +6,6 @@ gwt {
     gwtVersion = '2.9.0'
 }
 
-task gwtCompile(type: JavaExec) {
-    classpath = configurations.compileClasspath
-    main = 'com.google.gwt.dev.Compiler'
-    args '-war', 'html/target/GwtDefinitionGenerator', '-logLevel', 'INFO', 'com.mygdx.game.HtmlLauncher'
-}
-
-task generateGwtXml(type: org.gradle.api.tasks.JavaExec) {
-    classpath = configurations.compileClasspath
-    main = "com.google.gwt.dev.util.GwtDefinitionGenerator"
-    args "com.mygdx.game.HtmlLauncher"
-}
-
-assemble.dependsOn 'gwtCompile', 'generateGwtXml'
-
 sourceSets {
     main {
         java {
