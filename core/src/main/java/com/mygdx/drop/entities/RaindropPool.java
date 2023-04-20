@@ -10,7 +10,7 @@ public class RaindropPool extends Pool<Raindrop> {
 
     @Override
     public Raindrop newObject() {
-        return new Raindrop(0, 0, RAINDROP_HEIGHT * speedLevel);
+        return new Raindrop(0, 0, RAINDROP_HEIGHT * 2 * speedLevel);
     }
 
     @Override

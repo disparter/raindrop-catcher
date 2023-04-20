@@ -45,6 +45,7 @@ public class MainMenuScreen implements Screen {
 		this.speedLabel = new Label("Level: ", skin);
 		titleLabel.setPosition(VIEWPORT_WIDTH / 2f, 3 * VIEWPORT_HEIGHT / 4f, Align.center);
 		stage.addActor(titleLabel);
+		speed = 1;
 	}
 
 	private Skin setupSkin() {
