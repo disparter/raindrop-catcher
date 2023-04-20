@@ -1,21 +1,26 @@
 apply plugin: 'gwt'
 
 gwt {
-    gwtVersion = '2.9.0'
     modules 'com.mygdx.game.HtmlLauncher'
-}
-
-dependencies {
-    implementation project(':core')
+    devModules 'com.mygdx.game.HtmlLauncher'
+    gwtVersion = '2.9.0'
 }
 
 sourceSets {
     main {
         java {
-            srcDirs = ["src/"]
+            srcDirs = ['src/main/java', 'src/gwt/java']
         }
         resources {
-            srcDirs = ["src/"]
+            srcDirs = ['src/main/resources']
+        }
+    }
+    gwt {
+        java {
+            srcDirs = ['src/gwt/java']
+        }
+        resources {
+            srcDirs = ['src/gwt/resources']
         }
     }
 }

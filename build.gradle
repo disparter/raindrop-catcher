@@ -5,23 +5,23 @@ buildscript {
         mavenLocal()
         mavenCentral()
         gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
         google()
     }
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16'
         classpath 'org.gretty:gretty:3.0.7'
-        
-
     }
 }
 
 allprojects {
-    apply plugin: "eclipse"
+    apply plugin: "idea"
 
     version = '1.0'
     ext {
-        appName = "My GDX Game"
+        appName = "Raindrop Catcher"
         gdxVersion = '1.11.0'
         roboVMVersion = '2.3.19'
         box2DLightsVersion = '1.5'
@@ -44,7 +44,6 @@ allprojects {
 project(":desktop") {
     apply plugin: "java-library"
 
-
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
@@ -59,13 +58,13 @@ project(":html") {
     apply plugin: "war"
     apply plugin: "org.gretty"
 
-
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        
+        implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+        gwt "com.google.gwt:gwt-dev:2.9.0"
     }
 }
 
