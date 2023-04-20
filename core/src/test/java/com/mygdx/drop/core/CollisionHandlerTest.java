@@ -1,5 +1,7 @@
 package com.mygdx.drop.core;
 
+import com.mygdx.drop.entities.Bucket;
+import com.mygdx.drop.entities.Raindrop;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,18 +12,21 @@ public class CollisionHandlerTest {
 
     @Test
     public void testCollisionDetection() {
-        Bucket bucket = new Bucket(0, 0, 0, 0);
+        Bucket bucket = new Bucket();
         Raindrop raindrop = new Raindrop(0, 0, 0);
-        CollisionHandler collisionHandler = new CollisionHandler();
 
         // Test case 1: No collision
-        boolean isCollision = collisionHandler.checkForCollision(bucket, raindrop);
+        boolean isCollision = CollisionHandler.collidesWith(bucket.getBounds(),
+                raindrop.getBounds());
+
         assertFalse(isCollision);
 
         // Test case 2: Collision
-        bucket.setPosition(100, 100);
-        raindrop.setPosition(100, 100);
-        isCollision = collisionHandler.checkForCollision(bucket, raindrop);
+        bucket.getBounds().setPosition(100, 100);
+        raindrop.getBounds().setPosition(100, 100);
+        isCollision = CollisionHandler.collidesWith(bucket.getBounds(),
+                raindrop.getBounds());
+
         assertTrue(isCollision);
     }
 }
