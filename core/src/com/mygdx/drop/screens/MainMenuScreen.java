@@ -63,6 +63,7 @@ public class MainMenuScreen implements Screen {
 		final SelectBox<String> speedBox = new SelectBox<>(skin);
 		speedBox.setItems("Easy", "Normal", "Hard", "God");
 		speedBox.setSelected("Normal"); // Default to normal speed
+		speedBox.setWidth(100);
 
 		// add listeners
 		exitButton.addListener(new ClickListener() {
@@ -90,10 +91,10 @@ public class MainMenuScreen implements Screen {
 						speed = 2; // Normal
 						break;
 					case 2:
-						speed = 3; // Hard
+						speed = 4; // Hard
 						break;
 					case 3:
-						speed = 4; // God
+						speed = 8; // God
 						break;
 					default:
 						speed = 1; // Default to easy if something went wrong
