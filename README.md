@@ -6,8 +6,8 @@ Raindrop Catcher is a simple game developed using the LibGDX game development fr
 
 1. Clone the repository to your local machine
 2. Navigate to the project directory
-3. Run the following command to build the project: ./gradlew desktop:dist
-4. Run the following command to start the game: java -jar desktop/build/libs/desktop-1.0.jar
+3. Run the following command to build the project: ./gradlew desktop:shadowJar
+4. Run the following command to start the game: java -jar desktop/build/libs/raindrop-catcher-1.0.0-all.jar
 
 ## How to Play
 
