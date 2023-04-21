@@ -77,3 +77,7 @@ project(":core") {
         
     }
 }
+
+tasks.withType(JavaExec) {
+    jvmArgs '-Xmx2048m' // set heap size to 2 GB
+}
