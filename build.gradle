@@ -16,6 +16,9 @@ buildscript {
 
 allprojects {
     apply plugin: "idea"
+    apply plugin: 'org.gretty'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java'
 
     group = "com.github.disparter"
     version = '1.0.0'
@@ -83,8 +86,8 @@ tasks.withType(JavaExec) {
 
 publishing {
     publications {
-        create<MavenPublication>("default") {
-            from(components["java"])
+        maven(MavenPublication) {
+            from components.java
         }
     }
     repositories {
@@ -95,11 +98,5 @@ publishing {
                 password = System.getenv("GITHUB_TOKEN")
             }
         }
-    }
-}
-
-task publish(dependsOn: ['build']) {
-    doLast {
-        publishing.publications.maven.publish()
     }
 }
