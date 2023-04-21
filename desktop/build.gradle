@@ -1,11 +1,25 @@
+apply plugin: "application"
+apply plugin: 'com.github.johnrengelman.shadow'
+
 sourceCompatibility = 1.8
+archivesBaseName = "raindrop-catcher"
+
+mainClassName = 'com.github.disparter.raindrop.catcher.desktop.DesktopLauncher'
+
+dependencies {
+    implementation project(":core")
+    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    runtimeOnly "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+}
+
 sourceSets {
     main.java.srcDirs = ['src/main/java', 'src/main']
     main.resources.srcDirs = ["../assets"]
     test.java.srcDirs = ['src/test/java', 'src/test']
 }
 
-project.ext.mainClassName = "com.mygdx.game.DesktopLauncher"
+project.ext.mainClassName = "com.github.disparter.raindrop.catcher.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../assets")
 
 import org.gradle.internal.os.OperatingSystem
@@ -14,20 +28,6 @@ run {
     if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
         jvmArgs('-XstartOnFirstThread')
     }
-}
-
-task debug(dependsOn: classes, type: JavaExec) {
-    mainClass = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = project.assetsDir
-    ignoreExitValue = true
-    debug = true
-}
-
-dependencies {
-    implementation project(':core')
-    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 }
 
 shadowJar {

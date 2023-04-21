@@ -45,48 +45,6 @@ allprojects {
     }
 }
 
-project(":desktop") {
-    apply plugin: "application"
-    apply plugin: 'com.github.johnrengelman.shadow'
-
-    archivesBaseName = "raindrop-catcher"
-
-    mainClassName = 'com.mygdx.game.DesktopLauncher'
-
-    dependencies {
-        implementation project(":core")
-        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        runtimeOnly "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-
-    }
-}
-
-project(":html") {
-    apply plugin: "java-library"
-//    apply plugin: "gwt"
-    apply plugin: "war"
-    apply plugin: "org.gretty"
-
-    dependencies {
-        implementation project(":core")
-        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
-        api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-    }
-}
-
-project(":core") {
-    apply plugin: "java-library"
-
-
-    dependencies {
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
-    }
-}
-
 tasks.withType(JavaExec) {
     jvmArgs '-Xmx2048m' // set heap size to 2 GB
 }
@@ -105,7 +63,7 @@ publishing {
     }
     repositories {
         maven {
-            url "https://maven.pkg.github.com/disparter/libgdx"
+            url "https://maven.pkg.github.com/disparter/raindrop-catcher"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
