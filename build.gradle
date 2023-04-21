@@ -19,7 +19,6 @@ allprojects {
     apply plugin: 'org.gretty'
     apply plugin: 'maven-publish'
     apply plugin: 'java'
-    apply plugin: 'com.github.johnrengelman.shadow'
 
     group = "com.github.disparter"
     version = '1.0.0'
@@ -48,6 +47,7 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "application"
+    apply plugin: 'com.github.johnrengelman.shadow'
 
     archivesBaseName = "raindrop-catcher"
 
