@@ -1,32 +1,42 @@
-//apply plugin: 'gwt'
+apply plugin: 'gwt'
 
-//gwt {
-//    modules 'com.github.disparter.raindrop.catcher.html.HtmlLauncher'
-//    devModules 'com.github.disparter.raindrop.catcher.html.HtmlLauncher'
-//}
-
-task gwtCompile(type: JavaExec) {
-    classpath = configurations.compileClasspath
-    main = 'com.google.gwt.dev.Compiler'
-    args '-war', 'html/target/GwtDefinitionGenerator', '-logLevel', 'INFO', '-localWorkers', '4', 'com.github.disparter.raindrop.catcher.html.client.HtmlLauncher'
+ext {
+    gdxVersion = rootProject.ext.gdxVersion
 }
 
+gwt {
+    // The GWT module name
+    gwtVersion = '2.9.0'
+    maxHeapSize = "1G"
+}
 
+task gwtCompile(type: JavaExec) {
+    args '-war', 'html/target/GwtDefinitionGenerator', '-logLevel', 'INFO', '-localWorkers', '4', '-verbose', 'com.github.disparter.raindrop.catcher.html.client.HtmlLauncher'
+}
+
+// Define the source sets for your module
 sourceSets {
     main {
         java {
-            srcDirs = ['src/main/java', 'src/gwt/java']
+            srcDirs = ['src/main/java']
         }
         resources {
             srcDirs = ['src/main/resources']
         }
     }
-    gwt {
-        java {
-            srcDirs = ['src/gwt/java']
-        }
-        resources {
-            srcDirs = ['src/gwt/resources']
-        }
-    }
+}
+
+// Add the GWT dependencies
+dependencies {
+    implementation project(":core")
+    implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+    implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+    implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+    compileOnly "com.google.gwt:gwt-user:2.9.0"
+    compileOnly "com.google.gwt:gwt-dev:2.9.0"
+}
+
+clean.doFirst {
+    delete fileTree("build/gwt/out")
 }
