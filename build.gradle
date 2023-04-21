@@ -92,7 +92,7 @@ publishing {
     }
     repositories {
         maven {
-            url "https://repo.example.com/maven2"
+            url "https://maven.pkg.github.com/disparter/libgdx"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
