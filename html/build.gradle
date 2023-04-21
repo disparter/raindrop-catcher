@@ -1,15 +1,16 @@
-apply plugin: 'gwt'
+apply plugin: "application"
 
-ext {
-    gdxVersion = rootProject.ext.gdxVersion
+dependencies {
+    implementation project(":core")
+    implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+    implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+    implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
 }
 
-gwt {
-    // The GWT module name
-    gwtVersion = '2.9.0'
-    maxHeapSize = "1G"
+sourceSets {
+    main.java.srcDirs = ['src/main/java', 'src/main']
+    main.resources.srcDirs = ["../assets"]
 }
 
-task gwtCompile(type: JavaExec) {
-    args '-war', 'html/target/GwtDefinitionGenerator', '-logLevel', 'INFO', '-localWorkers', '4', '-verbose', 'com.github.disparter.raindrop.catcher.html.client.HtmlLauncher'
-}
+project.ext.assetsDir = new File("../assets")
