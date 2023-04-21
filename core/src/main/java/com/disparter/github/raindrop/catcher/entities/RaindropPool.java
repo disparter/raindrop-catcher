@@ -1,10 +1,8 @@
-package com.mygdx.drop.entities;
+package com.disparter.github.raindrop.catcher.entities;
 
 import com.badlogic.gdx.utils.Pool;
 
 import java.util.Random;
-
-import static com.mygdx.drop.entities.Constants.RAINDROP_HEIGHT;
 
 public class RaindropPool extends Pool<Raindrop> {
 
@@ -14,18 +12,18 @@ public class RaindropPool extends Pool<Raindrop> {
     private float speed;
     @Override
     public Raindrop newObject() {
-        Random random = new Random();
-        int randomValue = random.nextInt(dropsGathered + 1 ) + 1;
-        this.speed = RAINDROP_HEIGHT * 2 * speedLevel + (DROPS_SPEED_FACTOR * randomValue * dropsGathered);
+        final Random random = new Random();
+        final int randomValue = random.nextInt(dropsGathered + 1 ) + 1;
+        this.speed = Constants.RAINDROP_HEIGHT * 2 * speedLevel + (DROPS_SPEED_FACTOR * randomValue * dropsGathered);
         return new Raindrop(0, 0, speed);
     }
 
     @Override
-    public void free(Raindrop raindrop) {
+    public void free(final Raindrop raindrop) {
         super.free(raindrop);
     }
     
-    public void setSpeedLevel(int speedLevel, int dropsGathered){
+    public void setSpeedLevel(final int speedLevel, final int dropsGathered){
         this.speedLevel = speedLevel;
         this.dropsGathered = dropsGathered;
     }

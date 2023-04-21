@@ -51,7 +51,7 @@ project(":desktop") {
 
     archivesBaseName = "raindrop-catcher"
 
-    mainClassName = 'com.mygdx.game.DesktopLauncher'
+    mainClassName = 'com.github.disparter.raindrop.catcher.desktop.DesktopLauncher'
 
     dependencies {
         implementation project(":core")
@@ -105,7 +105,7 @@ publishing {
     }
     repositories {
         maven {
-            url "https://maven.pkg.github.com/disparter/libgdx"
+            url "https://maven.pkg.github.com/disparter/raindrop-catcher"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")

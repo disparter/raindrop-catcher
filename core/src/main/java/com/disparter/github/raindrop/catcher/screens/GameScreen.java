@@ -1,4 +1,4 @@
-package com.mygdx.drop.screens;
+package com.disparter.github.raindrop.catcher.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,28 +8,17 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.drop.DropGame;
-import com.mygdx.drop.core.CollisionHandler;
-import com.mygdx.drop.entities.Bucket;
-import com.mygdx.drop.entities.Constants;
-import com.mygdx.drop.entities.Raindrop;
-import com.mygdx.drop.entities.RaindropPool;
-
-import static com.mygdx.drop.entities.Constants.BUCKET_WIDTH;
-import static com.mygdx.drop.entities.Constants.DROPS_COLLECTED_MESSAGE_POSITION_Y;
-import static com.mygdx.drop.entities.Constants.LAST_DROP_FREQUENCY_IN_NANOS;
-import static com.mygdx.drop.entities.Constants.MAX_DROPS;
-import static com.mygdx.drop.entities.Constants.RAINDROP_HEIGHT;
-import static com.mygdx.drop.entities.Constants.RAINDROP_WIDTH;
-import static com.mygdx.drop.entities.Constants.VIEWPORT_WIDTH;
+import com.disparter.github.raindrop.catcher.DropGame;
+import com.disparter.github.raindrop.catcher.core.CollisionHandler;
+import com.disparter.github.raindrop.catcher.entities.Bucket;
+import com.disparter.github.raindrop.catcher.entities.Constants;
+import com.disparter.github.raindrop.catcher.entities.Raindrop;
+import com.disparter.github.raindrop.catcher.entities.RaindropPool;
 
 public class GameScreen implements Screen, InputProcessor {
 	final DropGame game;
@@ -49,7 +38,7 @@ public class GameScreen implements Screen, InputProcessor {
 	int dropsGathered;
 	long lastDropTime;
 
-	public GameScreen(final DropGame game, int speed) {
+	public GameScreen(final DropGame game, final int speed) {
 		this.game = game;
 
 		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
@@ -76,12 +65,12 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 
 	@Override
-	public void render(float delta) {
+	public void render(final float delta) {
 		// clear the screen with a dark blue color
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		Array<Raindrop> raindropsToRemove = new Array<>();
+		final Array<Raindrop> raindropsToRemove = new Array<>();
 
 		// update the camera's matrices
 		camera.update();
@@ -95,13 +84,13 @@ public class GameScreen implements Screen, InputProcessor {
 		handleInput();
 
 		// Spawn a new raindrop if it's time
-		if (TimeUtils.nanoTime() - lastDropTime > LAST_DROP_FREQUENCY_IN_NANOS) {
+		if (TimeUtils.nanoTime() - lastDropTime > Constants.LAST_DROP_FREQUENCY_IN_NANOS) {
 			spawnRaindrop();
 		}
 
 		batch.begin();
 		// Move the raindrops and remove any that are below the bottom of the screen
-		for (Raindrop raindrop : raindrops) {
+		for (final Raindrop raindrop : raindrops) {
 			raindrop.update(delta);
 			batch.draw(raindrop.getSprite(), raindrop.getBounds().x, raindrop.getBounds().y);
 
@@ -116,34 +105,34 @@ public class GameScreen implements Screen, InputProcessor {
 			}
 		}
 
-		float speed = (float) Math.round(raindropPool.getSpeed() * 100) / 100;
+		final float speed = (float) Math.round(raindropPool.getSpeed() * 100) / 100;
 
 		// Remove any raindrops that were caught or have gone off the screen
 		raindrops.removeAll(raindropsToRemove, false);
 		raindropsToRemove.clear();
-		font.draw(batch, "Drops Collected: " + dropsGathered, 0, DROPS_COLLECTED_MESSAGE_POSITION_Y);
-		font.draw(batch, "Speed: " + speed, VIEWPORT_WIDTH - 150, DROPS_COLLECTED_MESSAGE_POSITION_Y);
+		font.draw(batch, "Drops Collected: " + dropsGathered, 0, Constants.DROPS_COLLECTED_MESSAGE_POSITION_Y);
+		font.draw(batch, "Speed: " + speed, Constants.VIEWPORT_WIDTH - 150, Constants.DROPS_COLLECTED_MESSAGE_POSITION_Y);
 
 		batch.end();
 	}
 
 	private void handleInput() {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-			bucket.moveTo(bucket.getBounds().x - BUCKET_WIDTH / 2, bucket.getBounds().y);
+			bucket.moveTo(bucket.getBounds().x - Constants.BUCKET_WIDTH / 2, bucket.getBounds().y);
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-			bucket.moveTo(bucket.getBounds().x + BUCKET_WIDTH / 2, bucket.getBounds().y);
+			bucket.moveTo(bucket.getBounds().x + Constants.BUCKET_WIDTH / 2, bucket.getBounds().y);
 		}
 
 		if (Gdx.input.isTouched()) {
-			Vector3 touchPos = new Vector3();
+			final Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
-			bucket.moveTo(touchPos.x - BUCKET_WIDTH / 2, bucket.getBounds().y);
+			bucket.moveTo(touchPos.x - Constants.BUCKET_WIDTH / 2, bucket.getBounds().y);
 		}
 	}
 	@Override
-	public void resize(int width, int height) {
+	public void resize(final int width, final int height) {
 
 	}
 
@@ -163,11 +152,11 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 
 	private void spawnRaindrop() {
-		if (raindrops.size < MAX_DROPS) {
+		if (raindrops.size < Constants.MAX_DROPS) {
 			raindropPool.setSpeedLevel(speed, dropsGathered);
-			Raindrop raindrop = raindropPool.obtain();
-			raindrop.getBounds().x = MathUtils.random(0, Gdx.graphics.getWidth() - RAINDROP_WIDTH*2);
-			raindrop.getBounds().y = Gdx.graphics.getHeight() - RAINDROP_HEIGHT*2;
+			final Raindrop raindrop = raindropPool.obtain();
+			raindrop.getBounds().x = MathUtils.random(0, Gdx.graphics.getWidth() - Constants.RAINDROP_WIDTH * 2);
+			raindrop.getBounds().y = Gdx.graphics.getHeight() - Constants.RAINDROP_HEIGHT * 2;
 
 			raindrops.add(raindrop);
 			lastDropTime = TimeUtils.nanoTime();
@@ -182,42 +171,42 @@ public class GameScreen implements Screen, InputProcessor {
 	}
 
 	@Override
-	public boolean keyDown(int keycode) {
+	public boolean keyDown(final int keycode) {
 		return true;
 	}
 
 	@Override
-	public boolean keyUp(int keycode) {
+	public boolean keyUp(final int keycode) {
 		return true;
 	}
 
 	@Override
-	public boolean keyTyped(char character) {
+	public boolean keyTyped(final char character) {
 		return false;
 	}
 
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+	public boolean touchDown(final int screenX, final int screenY, final int pointer, final int button) {
 		return false;
 	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	public boolean touchUp(final int screenX, final int screenY, final int pointer, final int button) {
 		return false;
 	}
 
 	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
+	public boolean touchDragged(final int screenX, final int screenY, final int pointer) {
 		return false;
 	}
 
 	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
+	public boolean mouseMoved(final int screenX, final int screenY) {
 		return false;
 	}
 
 	@Override
-	public boolean scrolled(float amountX, float amountY) {
+	public boolean scrolled(final float amountX, final float amountY) {
 		return false;
 	}
 }

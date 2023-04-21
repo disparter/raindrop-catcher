@@ -1,20 +1,17 @@
-package com.mygdx.drop.entities;
+package com.disparter.github.raindrop.catcher.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
-import static com.mygdx.drop.entities.Constants.BUCKET_HEIGHT;
-import static com.mygdx.drop.entities.Constants.BUCKET_WIDTH;
-
 public class Bucket {
     private final Sprite sprite;
-    private Rectangle bounds;
+    private final Rectangle bounds;
 
     public Bucket() {
         sprite = new Sprite(new Texture(Gdx.files.internal("bucket.png")));
-        bounds = new Rectangle(320 / 2 - 64 / 2, 20, BUCKET_WIDTH, BUCKET_HEIGHT);
+        bounds = new Rectangle(320 / 2 - 64 / 2, 20, Constants.BUCKET_WIDTH, Constants.BUCKET_HEIGHT);
     }
 
     public Rectangle getBounds() {
@@ -29,7 +26,7 @@ public class Bucket {
         return sprite;
     }
 
-    public void moveTo(float x, float y) {
+    public void moveTo(final float x, final float y) {
         bounds.x = x;
         bounds.y = y;
     }

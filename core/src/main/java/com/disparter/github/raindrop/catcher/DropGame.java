@@ -1,7 +1,7 @@
-package com.mygdx.drop;
+package com.disparter.github.raindrop.catcher;
 
 import com.badlogic.gdx.Game;
-import com.mygdx.drop.screens.MainMenuScreen;
+import com.disparter.github.raindrop.catcher.screens.MainMenuScreen;
 
 public class DropGame extends Game {
     private MainMenuScreen mainMenuScreen;

@@ -1,21 +1,18 @@
-package com.mygdx.drop.entities;
+package com.disparter.github.raindrop.catcher.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
-import static com.mygdx.drop.entities.Constants.RAINDROP_HEIGHT;
-import static com.mygdx.drop.entities.Constants.RAINDROP_WIDTH;
-
 public class Raindrop {
     private final float speed;
     private final Sprite sprite;
-    private Rectangle bounds;
+    private final Rectangle bounds;
 
-    public Raindrop(float x, float y, float speed) {
+    public Raindrop(final float x, final float y, final float speed) {
         sprite = new Sprite(new Texture(Gdx.files.internal("droplet.png")));
-        bounds = new Rectangle(x, y, RAINDROP_WIDTH, RAINDROP_HEIGHT);
+        bounds = new Rectangle(x, y, Constants.RAINDROP_WIDTH, Constants.RAINDROP_HEIGHT);
         this.speed = speed;
     }
 
@@ -27,7 +24,7 @@ public class Raindrop {
         return bounds;
     }
 
-    public void update(float delta) {
+    public void update(final float delta) {
         bounds.y -= speed * delta;
     }
 }

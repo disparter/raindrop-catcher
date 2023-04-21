@@ -1,4 +1,4 @@
-package com.mygdx.drop.screens;
+package com.disparter.github.raindrop.catcher.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -18,32 +18,30 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.drop.DropGame;
-
-import static com.mygdx.drop.entities.Constants.VIEWPORT_HEIGHT;
-import static com.mygdx.drop.entities.Constants.VIEWPORT_WIDTH;
+import com.disparter.github.raindrop.catcher.DropGame;
+import com.disparter.github.raindrop.catcher.entities.Constants;
 
 public class MainMenuScreen implements Screen {
-	private Skin skin;
-	private DropGame game;
-	private OrthographicCamera camera;
-	private Viewport viewport;
-	private Stage stage;
-	private BitmapFont font;
-	private Label titleLabel;
-	private Label speedLabel;
+	private final Skin skin;
+	private final DropGame game;
+	private final OrthographicCamera camera;
+	private final Viewport viewport;
+	private final Stage stage;
+	private final BitmapFont font;
+	private final Label titleLabel;
+	private final Label speedLabel;
 	private int speed;
 
-	public MainMenuScreen(DropGame game) {
+	public MainMenuScreen(final DropGame game) {
 		this.game = game;
 		this.camera = new OrthographicCamera();
-		this.viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, camera);
+		this.viewport = new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT, camera);
 		this.stage = new Stage(viewport, new SpriteBatch());
 		this.font = new BitmapFont();
 		this.skin = setupSkin();
 		this.titleLabel = new Label("Main Menu", skin);
 		this.speedLabel = new Label("Level: ", skin);
-		titleLabel.setPosition(VIEWPORT_WIDTH / 2f, 3 * VIEWPORT_HEIGHT / 4f, Align.center);
+		titleLabel.setPosition(Constants.VIEWPORT_WIDTH / 2f, 3 * Constants.VIEWPORT_HEIGHT / 4f, Align.center);
 		stage.addActor(titleLabel);
 		speed = 1;
 	}
@@ -69,21 +67,21 @@ public class MainMenuScreen implements Screen {
 		// add listeners
 		exitButton.addListener(new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y) {
+			public void clicked(final InputEvent event, final float x, final float y) {
 				Gdx.app.exit();
 			}
 		});
 		startButton.addListener(new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y) {
+			public void clicked(final InputEvent event, final float x, final float y) {
 				game.setScreen(new GameScreen(game, speed));
 			}
 		});
 		speedBox.addListener(new ChangeListener() {
 			@Override
-			public void changed(ChangeEvent event, Actor actor) {
+			public void changed(final ChangeEvent event, final Actor actor) {
 				// Get the selected speed box level
-				int selectedIndex = speedBox.getSelectedIndex();
+				final int selectedIndex = speedBox.getSelectedIndex();
 
 				// Set the speed based on the selected level
 				switch (selectedIndex) {
@@ -115,7 +113,7 @@ public class MainMenuScreen implements Screen {
 	}
 
 	@Override
-	public void render(float delta) {
+	public void render(final float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -124,7 +122,7 @@ public class MainMenuScreen implements Screen {
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(final int width, final int height) {
 		viewport.update(width, height);
 		camera.update();
 	}

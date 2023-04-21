@@ -1,7 +1,7 @@
-package com.mygdx.drop.core;
+package com.disparter.github.raindrop.catcher.core;
 
-import com.mygdx.drop.entities.Bucket;
-import com.mygdx.drop.entities.Raindrop;
+import com.disparter.github.raindrop.catcher.entities.Bucket;
+import com.disparter.github.raindrop.catcher.entities.Raindrop;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +14,8 @@ public class CollisionHandlerTest {
     @Test
     @Disabled
     public void testCollisionDetection() {
-        Bucket bucket = new Bucket();
-        Raindrop raindrop = new Raindrop(0, 0, 0);
+        final Bucket bucket = new Bucket();
+        final Raindrop raindrop = new Raindrop(0, 0, 0);
 
         // Test case 1: No collision
         boolean isCollision = CollisionHandler.collidesWith(bucket.getBounds(),

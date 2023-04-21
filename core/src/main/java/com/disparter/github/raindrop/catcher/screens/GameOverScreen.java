@@ -1,4 +1,4 @@
-package com.mygdx.drop.screens;
+package com.disparter.github.raindrop.catcher.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.drop.DropGame;
+import com.disparter.github.raindrop.catcher.DropGame;
 
 public class GameOverScreen implements Screen {
 
@@ -18,7 +18,7 @@ public class GameOverScreen implements Screen {
 
     private float stateTime;
 
-    public GameOverScreen(DropGame game) {
+    public GameOverScreen(final DropGame game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         gameOverLabel = new Label("Game Over", new Label.LabelStyle(new BitmapFont(), Color.RED));
@@ -33,7 +33,7 @@ public class GameOverScreen implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(final float delta) {
         stateTime += delta;
         if (stateTime >= 5f) {
             game.dispose();
@@ -46,7 +46,7 @@ public class GameOverScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(final int width, final int height) {
         stage.getViewport().update(width, height, true);
     }
 

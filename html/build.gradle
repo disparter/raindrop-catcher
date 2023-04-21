@@ -1,14 +1,14 @@
 //apply plugin: 'gwt'
 
 //gwt {
-//    modules 'com.mygdx.game.HtmlLauncher'
-//    devModules 'com.mygdx.game.HtmlLauncher'
+//    modules 'com.github.disparter.raindrop.catcher.html.HtmlLauncher'
+//    devModules 'com.github.disparter.raindrop.catcher.html.HtmlLauncher'
 //}
 
 task gwtCompile(type: JavaExec) {
     classpath = configurations.compileClasspath
     main = 'com.google.gwt.dev.Compiler'
-    args '-war', 'html/target/GwtDefinitionGenerator', '-logLevel', 'INFO', '-localWorkers', '4', 'com.mygdx.game.HtmlLauncher'
+    args '-war', 'html/target/GwtDefinitionGenerator', '-logLevel', 'INFO', '-localWorkers', '4', 'com.github.disparter.raindrop.catcher.html.client.HtmlLauncher'
 }
 
 

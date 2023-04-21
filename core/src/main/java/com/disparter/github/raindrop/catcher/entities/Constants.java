@@ -1,4 +1,4 @@
-package com.mygdx.drop.entities;
+package com.disparter.github.raindrop.catcher.entities;
 
 public class Constants {
     public static final int VIEWPORT_WIDTH = 800;
