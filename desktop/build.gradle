@@ -10,16 +10,9 @@ project.ext.assetsDir = new File("../assets")
 
 import org.gradle.internal.os.OperatingSystem
 
-task run(dependsOn: classes, type: JavaExec) {
-    mainClass = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = project.assetsDir
-    ignoreExitValue = true
-
+run {
     if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
-        // Required to run on macOS
-        jvmArgs += "-XstartOnFirstThread"
+        jvmArgs('-XstartOnFirstThread')
     }
 }
 
@@ -46,10 +39,21 @@ task dist(type: Jar) {
 
 dependencies {
     implementation project(':core')
-    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
     implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-    implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.mygdx.game.desktop.DesktopLauncher'
+    }
+}
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'com.mygdx.game.desktop.DesktopLauncher'
+    }
+}
+
 
 
 dist.dependsOn classes
