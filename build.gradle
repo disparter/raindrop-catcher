@@ -1,6 +1,4 @@
 buildscript {
-    
-
     repositories {
         mavenLocal()
         mavenCentral()
@@ -19,7 +17,9 @@ buildscript {
 allprojects {
     apply plugin: "idea"
 
-    version = '1.0'
+    group = "com.github.disparter"
+    version = '1.0.0'
+
     ext {
         appName = "Raindrop Catcher"
         gdxVersion = '1.11.0'
@@ -79,4 +79,27 @@ project(":core") {
 
 tasks.withType(JavaExec) {
     jvmArgs '-Xmx2048m' // set heap size to 2 GB
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("default") {
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            url "https://repo.example.com/maven2"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
+task publish(dependsOn: ['build']) {
+    doLast {
+        publishing.publications.maven.publish()
+    }
 }
