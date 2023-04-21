@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16'
         classpath 'org.gretty:gretty:3.0.7'
+        classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
 }
 
@@ -18,6 +19,7 @@ allprojects {
     apply plugin: 'org.gretty'
     apply plugin: 'maven-publish'
     apply plugin: 'java'
+    apply plugin: 'com.github.johnrengelman.shadow'
 
     group = "com.github.disparter"
     version = '1.0.0'
