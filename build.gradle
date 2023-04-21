@@ -54,7 +54,7 @@ project(":desktop") {
 
 project(":html") {
     apply plugin: "java-library"
-    apply plugin: "gwt"
+//    apply plugin: "gwt"
     apply plugin: "war"
     apply plugin: "org.gretty"
 
@@ -64,7 +64,6 @@ project(":html") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
         implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        gwt "com.google.gwt:gwt-dev:2.9.0"
     }
 }
 

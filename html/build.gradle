@@ -1,10 +1,16 @@
-apply plugin: 'gwt'
+//apply plugin: 'gwt'
 
-gwt {
-    modules 'com.mygdx.game.HtmlLauncher'
-    devModules 'com.mygdx.game.HtmlLauncher'
-    gwtVersion = '2.9.0'
+//gwt {
+//    modules 'com.mygdx.game.HtmlLauncher'
+//    devModules 'com.mygdx.game.HtmlLauncher'
+//}
+
+task gwtCompile(type: JavaExec) {
+    classpath = configurations.compileClasspath
+    main = 'com.google.gwt.dev.Compiler'
+    args '-war', 'html/target/GwtDefinitionGenerator', '-logLevel', 'INFO', '-localWorkers', '4', 'com.mygdx.game.HtmlLauncher'
 }
+
 
 sourceSets {
     main {
