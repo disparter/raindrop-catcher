@@ -1,4 +1,3 @@
 rootProject.name = 'RaindropCatcher'
 include 'core'
 include 'desktop'
-include 'html'
