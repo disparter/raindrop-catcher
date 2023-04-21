@@ -89,6 +89,9 @@ tasks.withType(JavaExec) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId = 'com.github.disparter'
+            artifactId = 'raindrop-catcher'
+
             from components.java
             if (project.name == 'desktop') {
                 artifact jar
