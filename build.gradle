@@ -47,6 +47,8 @@ allprojects {
 project(":desktop") {
     apply plugin: "java-library"
 
+    archivesBaseName = "raindrop-catcher"
+
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
@@ -86,8 +88,11 @@ tasks.withType(JavaExec) {
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
+            if (project.name == 'desktop') {
+                artifact jar
+            }
         }
     }
     repositories {
