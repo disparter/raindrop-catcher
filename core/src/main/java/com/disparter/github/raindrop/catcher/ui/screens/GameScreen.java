@@ -1,4 +1,4 @@
-package com.disparter.github.raindrop.catcher.screens;
+package com.disparter.github.raindrop.catcher.ui.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,11 +14,11 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.disparter.github.raindrop.catcher.DropGame;
-import com.disparter.github.raindrop.catcher.core.CollisionHandler;
-import com.disparter.github.raindrop.catcher.entities.Bucket;
-import com.disparter.github.raindrop.catcher.entities.Constants;
-import com.disparter.github.raindrop.catcher.entities.Raindrop;
-import com.disparter.github.raindrop.catcher.entities.RaindropPool;
+import com.disparter.github.raindrop.catcher.ui.core.CollisionHandler;
+import com.disparter.github.raindrop.catcher.ui.entities.Bucket;
+import com.disparter.github.raindrop.catcher.ui.entities.Constants;
+import com.disparter.github.raindrop.catcher.ui.entities.Raindrop;
+import com.disparter.github.raindrop.catcher.ui.entities.RaindropPool;
 
 public class GameScreen implements Screen, InputProcessor {
 	final DropGame game;

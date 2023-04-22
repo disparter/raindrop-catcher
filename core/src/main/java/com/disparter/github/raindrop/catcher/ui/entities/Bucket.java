@@ -1,12 +1,12 @@
-package com.disparter.github.raindrop.catcher.entities;
+package com.disparter.github.raindrop.catcher.ui.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
-import static com.disparter.github.raindrop.catcher.entities.Constants.BUCKET_HEIGHT;
-import static com.disparter.github.raindrop.catcher.entities.Constants.BUCKET_WIDTH;
+import static com.disparter.github.raindrop.catcher.ui.entities.Constants.BUCKET_HEIGHT;
+import static com.disparter.github.raindrop.catcher.ui.entities.Constants.BUCKET_WIDTH;
 
 public class Bucket {
     private final Sprite sprite;

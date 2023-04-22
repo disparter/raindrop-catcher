@@ -1,4 +1,4 @@
-package com.disparter.github.raindrop.catcher.entities;
+package com.disparter.github.raindrop.catcher.ui.entities;
 
 public class Constants {
     public static final int VIEWPORT_WIDTH = 800;

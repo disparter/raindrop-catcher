@@ -1,4 +1,4 @@
-package com.disparter.github.raindrop.catcher.entities;
+package com.disparter.github.raindrop.catcher.ui.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

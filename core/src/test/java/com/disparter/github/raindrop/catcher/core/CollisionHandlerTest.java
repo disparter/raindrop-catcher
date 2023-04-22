@@ -1,7 +1,8 @@
 package com.disparter.github.raindrop.catcher.core;
 
-import com.disparter.github.raindrop.catcher.entities.Bucket;
-import com.disparter.github.raindrop.catcher.entities.Raindrop;
+import com.disparter.github.raindrop.catcher.ui.core.CollisionHandler;
+import com.disparter.github.raindrop.catcher.ui.entities.Bucket;
+import com.disparter.github.raindrop.catcher.ui.entities.Raindrop;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 

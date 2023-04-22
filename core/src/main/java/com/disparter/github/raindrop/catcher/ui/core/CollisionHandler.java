@@ -1,4 +1,4 @@
-package com.disparter.github.raindrop.catcher.core;
+package com.disparter.github.raindrop.catcher.ui.core;
 
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;

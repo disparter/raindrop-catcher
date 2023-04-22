@@ -1,4 +1,4 @@
-package com.disparter.github.raindrop.catcher.screens;
+package com.disparter.github.raindrop.catcher.ui.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
