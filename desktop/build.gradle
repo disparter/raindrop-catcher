@@ -1,15 +1,10 @@
-apply plugin: "application"
 apply plugin: 'com.github.johnrengelman.shadow'
 
-sourceCompatibility = 1.8
 archivesBaseName = "raindrop-catcher"
-
-mainClassName = 'com.github.disparter.raindrop.catcher.desktop.DesktopLauncher'
 
 dependencies {
     implementation project(":core")
     implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-    runtimeOnly "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
     implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
 }
 
@@ -22,18 +17,3 @@ sourceSets {
 project.ext.mainClassName = "com.github.disparter.raindrop.catcher.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../assets")
 
-import org.gradle.internal.os.OperatingSystem
-
-run {
-    if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
-        jvmArgs('-XstartOnFirstThread')
-    }
-}
-
-shadowJar {
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-    manifest {
-        attributes 'Main-Class': project.mainClassName
-    }
-    configurations = [project.configurations.runtimeClasspath]
-}

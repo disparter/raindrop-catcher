@@ -20,5 +20,6 @@ public class Player {
     private UUID id;
     String name;
     int score;
+    long timestamp;
 
 }

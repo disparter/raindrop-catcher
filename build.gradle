@@ -8,9 +8,11 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16'
-        classpath 'org.gretty:gretty:3.0.7'
-        classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
+        classpath 'org.docstr:gwt-gradle-plugin:1.1.26'
+        classpath 'org.gretty:gretty:4.0.3'
+        classpath "gradle.plugin.com.github.johnrengelman:shadow:7.1.2"
+        classpath "io.freefair.gradle:lombok-plugin:8.0.1"
+
     }
 }
 
@@ -18,7 +20,8 @@ allprojects {
     apply plugin: "idea"
     apply plugin: 'org.gretty'
     apply plugin: 'maven-publish'
-    apply plugin: 'java'
+    apply plugin: 'java-platform'
+    apply plugin: 'com.github.johnrengelman.shadow'
 
     group = "com.github.disparter"
     version = '1.0.0'
@@ -45,6 +48,10 @@ allprojects {
     }
 }
 
+javaPlatform {
+    allowDependencies()
+}
+
 tasks.withType(JavaExec) {
     jvmArgs '-Xmx2048m' // set heap size to 2 GB
 }
@@ -55,7 +62,7 @@ publishing {
             groupId = 'com.github.disparter'
             artifactId = 'raindrop-catcher'
 
-            from components.java
+            from components.javaPlatform
             if (project.name == 'desktop') {
                 artifact jar
             }
